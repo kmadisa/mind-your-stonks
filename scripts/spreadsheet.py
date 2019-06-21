@@ -30,6 +30,10 @@ def main():
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
             print(row)
+            sheet.append_row(row.split(","))
+
+    list_of_hashes = sheet.get_all_records()
+    print(list_of_hashes)
 
 if __name__ == "__main__":
     main()
