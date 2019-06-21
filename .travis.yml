@@ -5,6 +5,7 @@ addons:
   firefox: latest
 
 before_install:
+  - openssl aes-256-cbc -K $encrypted_e21a95bd5d44_key -iv $encrypted_e21a95bd5d44_iv -in client_secret.json.enc -out client_secret.json -d
   - pip install selenium
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
   - mkdir geckodriver
