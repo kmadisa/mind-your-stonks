@@ -1,5 +1,8 @@
 import argparse
 import time
+import csv
+
+from datetime import datetime 
 
 from selenium import webdriver 
 from selenium.webdriver.firefox.options import Options
@@ -35,6 +38,14 @@ def main():
     balance = driver.find_element_by_id("blocklogout_userBalanceText")
     print("Balance: R", balance.text)
     driver.close()
+
+    date = datetime.date(datetime.now())
+
+    with open('balance.csv', mode='w') as balance_file:
+        balance_writer = csv.writer(balance_file, delimiter=',',
+                                    quotechexar='"', quoting=csv.QUOTE_MINIMAL)
+
+        balance_writer.writerow([date, balance.text])
 
 if __name__ == "__main__":
     main()
