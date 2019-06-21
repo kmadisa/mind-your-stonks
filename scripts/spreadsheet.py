@@ -27,10 +27,10 @@ def main():
     print(list_of_hashes)
 
     with open('balance.csv', mode='r') as csv_file:
-        csv_reader = csv.DictReader(csv_file)
+        csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             print(row)
-            sheet.append_row(row.split(","))
+            sheet.append_row(row)
 
     list_of_hashes = sheet.get_all_records()
     print(list_of_hashes)
