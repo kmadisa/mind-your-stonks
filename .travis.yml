@@ -12,9 +12,9 @@ before_install:
   - tar -xzf geckodriver-v0.24.0-linux64.tar.gz -C geckodriver
   - export PATH=$PATH:$PWD/geckodriver
   - geckodriver --version || exit 1
+  - pip install gspread
+  - pip install --upgrade oauth2client
 
 script:
   - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
   - python scripts/spreadsheet.py --json ./client_secret.json
-
-  
