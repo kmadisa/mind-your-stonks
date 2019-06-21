@@ -37,6 +37,7 @@ def main():
 
     balance = driver.find_element_by_id("blocklogout_userBalanceText")
     print("Balance: R", balance.text)
+    account_balance = balance.text
     driver.close()
 
     date = datetime.date(datetime.now())
@@ -45,7 +46,7 @@ def main():
         balance_writer = csv.writer(balance_file, delimiter=',',
                                     quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-        balance_writer.writerow([date, balance.text])
+        balance_writer.writerow([date, account_balance])
 
 if __name__ == "__main__":
     main()
