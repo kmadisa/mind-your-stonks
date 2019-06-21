@@ -1,0 +1,11 @@
+
+language: python
+
+addons:
+  firefox: latest
+
+before_install:
+  - pip install selenium
+
+script:
+  - echo "Hello World"
