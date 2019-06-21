@@ -15,6 +15,5 @@ before_install:
 script:
   - echo "Hello World"
   - ls
-  - python scripts/bet_stats.py
-  - echo $USERNAME
-  - echo $PASSWORD
+  - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+  
