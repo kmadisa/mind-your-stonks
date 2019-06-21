@@ -13,7 +13,6 @@ def main():
     # use creds to create a client to interact with the Google Drive API
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
-    print(opts.client_secrets)
     creds = ServiceAccountCredentials.from_json_keyfile_name(opts.client_secrets, scope)
     client = gspread.authorize(creds)
 
@@ -24,6 +23,11 @@ def main():
     # Extract and print all of the values
     list_of_hashes = sheet.get_all_records()
     print(list_of_hashes)
+
+    with open('balance.csv', mode='r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            print(row)
 
 if __name__ == "__main__":
     main()
