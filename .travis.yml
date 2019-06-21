@@ -17,4 +17,4 @@ before_install:
 
 script:
   - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
-  - python scripts/spreadsheet.py --json ./client_secret.json
+  - python scripts/spreadsheet.py --client-secrets ./client_secret.json
