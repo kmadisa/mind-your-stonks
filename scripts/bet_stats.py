@@ -33,7 +33,7 @@ def main():
     driver.find_element_by_name("submitted").click()
 
     balance = driver.find_element_by_id("blocklogout_userBalanceText")
-    print("Balance: ", balance.text)
+    print("Balance: R", balance.text)
     driver.close()
 
 if __name__ == "__main__":
