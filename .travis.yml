@@ -16,3 +16,5 @@ script:
   - echo "Hello World"
   - ls
   - python scripts/bet_stats.py
+  - echo $USERNAME
+  - echo $PASSWORD
