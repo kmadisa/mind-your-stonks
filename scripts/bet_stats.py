@@ -1,7 +1,7 @@
 import time
 
 from selenium import webdriver 
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
 
 
 # How to get the account balance.
