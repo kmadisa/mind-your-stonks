@@ -9,3 +9,5 @@ before_install:
 
 script:
   - echo "Hello World"
+  - ls
+  - python scripts/bet_stats.py
