@@ -17,4 +17,5 @@ before_install:
 
 script:
   - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+  - cat balance.csv
   - python scripts/spreadsheet.py --client-secrets ./client_secret.json
