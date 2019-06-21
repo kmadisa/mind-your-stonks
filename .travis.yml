@@ -14,7 +14,7 @@ before_install:
   - geckodriver --version || exit 1
 
 script:
-  - echo "Hello World"
-  - ls
   - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+  - python scripts/spreadsheet.py --json ./client_secret.json
+
   
