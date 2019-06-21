@@ -4,10 +4,13 @@ import csv
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-parser = argparse.ArgumentParser(description="")
+parser = argparse.ArgumentParser(description="Populate the Google spreadsheet"
+                                 " with data from bet.co.za")
 parser.add_argument(
     "--client-secrets",
-    required=True,)
+    required=True,
+    help="The client_secret.json file downloaded from the Google Developers'"
+        " Console.",)
 
 def main():
 
@@ -22,16 +25,13 @@ def main():
     # Make sure you use the right name here.
     sheet = client.open("BET account balance").sheet1
 
-    # Extract and print all of the values
-    list_of_hashes = sheet.get_all_records()
-    print(list_of_hashes)
-
     with open('balance.csv', mode='r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             print(row)
             sheet.append_row(row)
 
+    # Extract and print all of the values
     list_of_hashes = sheet.get_all_records()
     print(list_of_hashes)
 
