@@ -1,0 +1,29 @@
+
+language: python
+
+addons:
+  firefox: latest
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_e21a95bd5d44_key -iv $encrypted_e21a95bd5d44_iv -in client_secret.json.enc -out client_secret.json -d
+  - pip install selenium
+  - wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+  - mkdir geckodriver
+  - tar -xzf geckodriver-v0.24.0-linux64.tar.gz -C geckodriver
+  - export PATH=$PATH:$PWD/geckodriver
+  - geckodriver --version || exit 1
+  - pip install gspread
+  - pip install --upgrade oauth2client
+
+stages:
+  - bet
+  - sheets
+
+jobs:
+  include:
+    - stage: bet
+      script: python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+
+    - stage: sheets
+      if: NOT type IN (pull_request) AND branch = master
+      script: python scripts/spreadsheet.py --client-secrets ./client_secret.json
