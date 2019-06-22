@@ -15,6 +15,17 @@ before_install:
   - pip install gspread
   - pip install --upgrade oauth2client
 
-script:
-  - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
-  - python scripts/spreadsheet.py --client-secrets ./client_secret.json
+stages:
+  - bet
+  - sheets
+
+bet:
+  stage: bet
+  script:
+    - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+
+sheets:
+  stage: sheets
+  if: branch = master
+  script:
+    - python scripts/spreadsheet.py --client-secrets ./client_secret.json
