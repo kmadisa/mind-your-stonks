@@ -14,17 +14,29 @@ before_install:
   - geckodriver --version || exit 1
   - pip install gspread
   - pip install --upgrade oauth2client
+  # set up awscli packages
+  - pip install --user awscli
   - mkdir -p ~/$TRAVIS_BUILD_NUMBER
+  - aws s3 sync s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
 
 stages:
-  - bet
-  - sheets
+  - read_bet
+  - publish_sheets
 
 jobs:
   include:
-    - stage: bet
-      script: python scripts/bet_stats.py --username $USERNAME --password $PASSWORD && cp balance.csv ~/$TRAVIS_BUILD_NUMBER
+    - stage: read_bet
+      script:
+        - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+        - cp balance.csv ~/$TRAVIS_BUILD_NUMBER/balance.csv
 
-    - stage: sheets
+    - stage: publish_sheets
       if: NOT type IN (pull_request) AND branch = master
-      script: cp -t . ~/$TRAVIS_BUILD_NUMBER/balance.csv && python scripts/spreadsheet.py --client-secrets ./client_secret.json
+      script:
+        - cp -t . ~/$TRAVIS_BUILD_NUMBER/balance.csv
+        - python scripts/spreadsheet.py --client-secrets ./client_secret.json
+      after_success:
+        - aws s3 rm --recursive s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER # clean up after ourselves
+
+after_success:
+  - aws s3 sync ~/$TRAVIS_BUILD_NUMBER s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER
