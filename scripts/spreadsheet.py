@@ -28,13 +28,13 @@ def main():
     with open('balance.csv', mode='r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
-            print(row)
             previous_row_num = len(sheet.get_all_values())
             current_row_num = previous_row_num + 1
-            percentage_increase = "=MINUS(B{},B{})/B{}]".format(
+            percentage_increase = "=MINUS(B{},B{})/B{}".format(
                 current_row_num, previous_row_num, previous_row_num)
             row.append(percentage_increase)
-            sheet.append_row(row)
+            print(row)
+            sheet.append_row(row, value_input_option='USER_ENTERED')
 
     # Extract and print all of the values
     list_of_hashes = sheet.get_all_records()
