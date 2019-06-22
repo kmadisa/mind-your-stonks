@@ -14,6 +14,7 @@ before_install:
   - geckodriver --version || exit 1
   - pip install gspread
   - pip install --upgrade oauth2client
+  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
 
 stages:
   - bet
@@ -22,8 +23,8 @@ stages:
 jobs:
   include:
     - stage: bet
-      script: python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+      script: python scripts/bet_stats.py --username $USERNAME --password $PASSWORD && cp balance.csv ~/$TRAVIS_BUILD_NUMBER
 
     - stage: sheets
       if: NOT type IN (pull_request) AND branch = master
-      script: python scripts/spreadsheet.py --client-secrets ./client_secret.json
+      script: cp -t . ~/$TRAVIS_BUILD_NUMBER/balance.csv && python scripts/spreadsheet.py --client-secrets ./client_secret.json
