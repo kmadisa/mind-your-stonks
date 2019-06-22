@@ -30,7 +30,7 @@ def main():
         for row in csv_reader:
             previous_row_num = len(sheet.get_all_values())
             current_row_num = previous_row_num + 1
-            percentage_increase = "=MINUS(B{},B{})/B{}".format(
+            percentage_increase = "=ROUND(MINUS(B{},B{})/B{}, 2))".format(
                 current_row_num, previous_row_num, previous_row_num)
             row.append(percentage_increase)
             print(row)
