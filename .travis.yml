@@ -19,13 +19,11 @@ stages:
   - bet
   - sheets
 
-bet:
-  stage: bet
-  script:
-    - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+jobs:
+  include:
+    - stage: bet
+      script: python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
 
-sheets:
-  stage: sheets
-  if: branch = master
-  script:
-    - python scripts/spreadsheet.py --client-secrets ./client_secret.json
+    - stage: sheets
+      if: NOT type IN (pull_request) AND branch = master
+      script: python scripts/spreadsheet.py --client-secrets ./client_secret.json
