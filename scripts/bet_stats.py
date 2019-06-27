@@ -37,17 +37,21 @@ def main():
     print("Submitting data to https://www.bet.co.za!")
     driver.find_element_by_name("submitted").click()
 
+    print("Reading timestamp.")
+    timestamp = driver.find_element_by_id("time").text.split("Your time: ")
+    timestamp = timestamp[-1].strip()
     account_balance = driver.find_element_by_id("blocklogout_userBalanceText").text
     driver.close()
 
     print("Account Balance: R", account_balance)
-
+    print("Timestamp: ", timestamp)
     date = datetime.date(datetime.now())
+    print("Date: ", date)
 
     with open('balance.csv', mode='w') as balance_file:
         balance_writer = csv.writer(balance_file, delimiter=',',
                                     quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        balance_writer.writerow([date, account_balance])
+        balance_writer.writerow([date, account_balance, timestamp])
 
 if __name__ == "__main__":
     main()
