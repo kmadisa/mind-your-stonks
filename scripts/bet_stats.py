@@ -38,7 +38,7 @@ def main():
     driver.find_element_by_name("submitted").click()
 
     print("Reading timestamp.")
-    timestamp = driver.find_element_by_id("time").text.split(":")
+    timestamp = driver.find_element_by_id("time").text.split("Your time: ")
     timestamp = timestamp[-1].strip()
     account_balance = driver.find_element_by_id("blocklogout_userBalanceText").text
     driver.close()
