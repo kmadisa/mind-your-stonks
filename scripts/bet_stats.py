@@ -9,7 +9,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.select import Select 
 
 (TICKET, EVENT_DATE, TOURNAMENT, EVENT, SELECTION, BET_TYPE,
- STAKE, POTENTIAL_WIN, STATUS)  = range(1, 9)
+ STAKE, POTENTIAL_WIN, STATUS)  = range(1, 10)
 
 parser = argparse.ArgumentParser(description="Scrape the BET.co.za website"
                                  " to obtain the account balance.")
