@@ -70,7 +70,7 @@ def main():
     # TODO Handle a situation with multiple pages.
     money_in_bets = 0.00
     for c in col:
-        money_in_bets += float(c)
+        money_in_bets += float(c.text)
     
     print("Money in bets: R", money_in_bets)
 
