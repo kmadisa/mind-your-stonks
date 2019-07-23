@@ -32,7 +32,7 @@ def main():
             current_row_num = previous_row_num + 1
             percentage_increase = "=ROUND(MINUS(B{},B{})/B{}, 2)".format(
                 current_row_num, previous_row_num, previous_row_num)
-            row.insert(-1, percentage_increase)  # Move the timestamp to the last column
+            row.insert(2, percentage_increase)  # Move the timestamp to the 2nd last column
                                                  # to preserve the structure of the table.
             print(row)
             sheet.append_row(row, value_input_option='USER_ENTERED')
