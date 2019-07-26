@@ -34,12 +34,7 @@ def main():
                 current_row_num, previous_row_num, previous_row_num)
             row.insert(2, percentage_increase)  # Move the timestamp to the 2nd last column
                                                  # to preserve the structure of the table.
-            print(row)
             sheet.append_row(row, value_input_option='USER_ENTERED')
-
-    # Extract and print all of the values
-    list_of_hashes = sheet.get_all_records()
-    print(list_of_hashes)
 
 if __name__ == "__main__":
     main()
