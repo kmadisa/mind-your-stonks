@@ -31,25 +31,15 @@ def main():
     driver = webdriver.Firefox(options=options)
     driver.get("https://www.bet.co.za")
 
-    print("Entering the username!")
     driver.find_element_by_name("frmUsername").send_keys(opts.username)
-    print("Entering the password!")
     driver.find_element_by_name("frmPassword").send_keys(opts.password)
-    print("Accepting terms and conditions!")
     driver.find_element_by_name("frmForceTerms").click()
-    print("Submitting data to https://www.bet.co.za!")
     driver.find_element_by_name("submitted").click()
-
-    print("Reading timestamp.")
+    
     timestamp = driver.find_element_by_id("time").text.split("Your time: ")
     timestamp = timestamp[-1].strip()
     account_balance = driver.find_element_by_id("blocklogout_userBalanceText").text
-    
-
-    print("Account Balance: R", account_balance)
-    print("Timestamp: ", timestamp)
     date = datetime.date(datetime.now())
-    print("Date: ", date)
 
 
     # Also need to get the amount of funds that is placed in bets
@@ -65,14 +55,12 @@ def main():
     # Get the table object
     table = driver.find_element_by_class_name('stdTable')
     # Get all the rows on column number 7 (Stake)
-    col = table.find_elements_by_xpath("//tr/td["+str(STAKE)+"]")
+    stakes = table.find_elements_by_xpath("//tr/td["+str(STAKE)+"]")
 
     # TODO Handle a situation with multiple pages.
     money_in_bets = 0.00
-    for c in col:
-        money_in_bets += float(c.text)
-    
-    print("Money in bets: R", money_in_bets)
+    for stake in stakes:
+        money_in_bets += float(stake.text)
 
     driver.close()
 
