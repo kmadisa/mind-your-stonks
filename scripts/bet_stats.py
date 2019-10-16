@@ -79,10 +79,11 @@ def main():
     money_in_bets = 0.00
 
     for page in range(1, num_of_pages+1):
-        pagination = driver.find_element_by_class_name("pagination") # Need of raises StaleElementReferenceException
-        page_ = pagination.find_element_by_link_text('{}'.format(page))
-        page_.click()
-        time.sleep(0.5)
+        if page > 1:
+            pagination = driver.find_element_by_class_name("pagination") # Need of raises StaleElementReferenceException
+            page_ = pagination.find_element_by_link_text('{}'.format(page))
+            page_.click()
+            time.sleep(0.5)
         # Get all the rows on column number 7 (Stake)
         stakes = table.find_elements_by_xpath("//tr/td["+str(STAKE)+"]")
         
