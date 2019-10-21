@@ -54,10 +54,7 @@ def main():
     form_filter.find_element_by_class_name('inputBtn').click()
     # Get the table object
     table = driver.find_element_by_class_name('stdTable')
-#    # Get all the rows on column number 7 (Stake)
-#    stakes = table.find_elements_by_xpath("//tr/td["+str(STAKE)+"]")
 
-    # TODO Handle a situation with multiple pages.
     # Pages can come in different forms
     # '' ==> means just one page
     # '12»' ==> means just two pages in total
@@ -83,17 +80,12 @@ def main():
             pagination = driver.find_element_by_class_name("pagination") # Need of raises StaleElementReferenceException
             page_ = pagination.find_element_by_link_text('{}'.format(page))
             page_.click()
-            time.sleep(0.5)
+
         # Get all the rows on column number 7 (Stake)
         stakes = table.find_elements_by_xpath("//tr/td["+str(STAKE)+"]")
         
         for stake in stakes:
             money_in_bets += float(stake.text)
-
-
-    #money_in_bets = 0.00
-    ##for stake in stakes:
-    #    money_in_bets += float(stake.text)
 
     driver.close()
 
