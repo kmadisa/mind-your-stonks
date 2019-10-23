@@ -28,7 +28,9 @@ Basically there are utility scripts that run and log into the client's [BET.co.z
 3. Now install:
     *   `pip install . -U`
 
-4. Upload the [spreadsheet](docs/Shopping_List.xlsx) to GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets), and insert your items into column 2 [ **Items** ]
+4. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
+
+
 
 ## Usage
 
