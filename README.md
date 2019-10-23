@@ -8,7 +8,7 @@
 
 The purpose of this project is to provide [BET.co.za](https://bet.co.za) clients an easier way to keep track of the changes occurring in their account balance.
 
-Basically there are utility scripts that run and log into the client's [BET.co.za](https://bet.co.za) account (using [Selenium](https://selenium-python.readthedocs.io/) and read the value of the current balance and uploads the data to a [Google Sheets](https://docs.google.com/spreadsheets/u/0/), where then it can be visualized.
+Basically there are utility scripts that run and log into the client's [BET.co.za](https://bet.co.za) account (using [Selenium](https://selenium-python.readthedocs.io/)) and read the value of the current balance and uploads the data to a [Google Sheets](https://docs.google.com/spreadsheets/u/0/), where then it can be visualized.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **AND JUST LIKE THAT YOU KNOW THE RISE & FALL OF YOUR STONKS !!!!**
