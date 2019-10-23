@@ -19,53 +19,60 @@ Basically there are utility scripts that run and log into the client's [BET.co.z
 1. Obtain Google API for authentication:
     *   Follow the instructions [here](https://gspread.readthedocs.io/en/latest/oauth2.html#oauth-credentials)
 
-2. Before you install ensure that `geckodrive` for Firefox is installed.
+2. Install ensure that `geckodrive` for Firefox is installed.
     *   Download [geckodriver](https://github.com/mozilla/geckodriver)
         *   ```wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz```
         *   Extract: ```tar -xvzf geckodriver-v0.24.0-linux64.tar.gz```
     *   `sudo cp geckodriver /usr/local/bin`
 
-3. Now install:
-    *   `pip install . -U`
+3.Install Selenium:
+    *   `pip install selenium`
 
 4. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
 
+![Screenshot from 2019-10-23 21-00-27](https://user-images.githubusercontent.com/16665803/67426299-18d81200-f5da-11e9-94cd-105195975b3d.png)
+
+#### Table columns
+   * *Date*: date reading was made
+   * *Balance*: the current balance in the account in S.A rands
+   * *% Increase*: calculated from the previous known balance and the current one (+ money in bets)
+   * *Timestamp*: indicated when the script logged into the account
+   * *Money in bets*: the amount of money placed in a bet which is still unresolved
+   * *Actual Loss/Gain*: difference between the previous known balance and the current one (+ money in bets)
 
 
 ## Usage
 
+At the moment the project has two scripts that have to be run in sequence (not the smartest way at the moment) `bet_stats.py` and `spreadsheet.py`, respectively. In simple terms, the `bet_stats.py` reads and aggregates the data from the [BET.co.za](https://bet.co.za) site and writes it to a temporary csv file. The `spreasheet.py` script reads the csv file and writes the data to the Google Spreadsheet.
+
 ```bash
-price_checker.py -h
-usage: price_checker.py [-h] --json CLIENT_SECRET_FILE --spreadsheet_name
-                        SPREADSHEET_NAME [--share-with SHARED] [--update]
-                        [--loglevel LOG_LEVEL]
+python bet_stats.py -h
+usage: bet_stats.py [-h] --username USERNAME --password PASSWORD
 
 optional arguments:
   -h, --help            show this help message and exit
-  --json CLIENT_SECRET_FILE
+  --username USERNAME  Bet.co.za registered email address
+  --password PASSWORD  Bet.co.za account password
+  
+python spreadsheet.py -h
+usage: spreadsheet.py [-h] --client-secrets CLIENT_SECRET_FILE
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --client-secrets CLIENT_SECRET_FILE
                         Google Json file containing secrets.
-  --spreadsheet_name SPREADSHEET_NAME, -s SPREADSHEET_NAME
-                        Name of the spreadsheet you want to open.
-  --share-with SHARED   [email address] Share the spreadsheet with someone via
-                        email
-  --update              Update spreadsheet with new prices.
-  --loglevel LOG_LEVEL  log level to use, default [INFO], options [INFO,
-                        DEBUG, ERROR]
 ```
 
 Typical usage:
+```bash
+python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+python scripts/spreadsheet.py --client-secrets ./client_secret.json
+```
 
-
-## Oh, Thanks!
-
-By the way... Click if you'd like to [say thanks](https://saythanks.io/to/mmphego)... :) else *Star* it.
-
-✨🍰✨
-
-
-## Travis CI automated daily price updates
+## Travis CI automated daily balance reader
 Travis CI can automatically run your Google App Engine based application, by encrypting your `clients_secrets.json` file and pushing it to `GitHub`.
 See: https://docs.travis-ci.com/user/deployment/google-app-engine/
+
 
 ## Feedback
 
