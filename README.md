@@ -31,6 +31,7 @@ Basically there are utility scripts that run and log into the client's [BET.co.z
 4. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
 
 ![Screenshot from 2019-10-23 21-00-27](https://user-images.githubusercontent.com/16665803/67426299-18d81200-f5da-11e9-94cd-105195975b3d.png)
+Figure 1. A snapshot of the spreadsheet columns.
 
 #### Table columns
    * *Date*: date reading was made
