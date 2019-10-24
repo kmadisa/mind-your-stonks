@@ -25,7 +25,7 @@ Basically there are utility scripts that run and log into the client's [BET.co.z
         *   Extract: ```tar -xvzf geckodriver-v0.24.0-linux64.tar.gz```
     *   `sudo cp geckodriver /usr/local/bin`
 
-3.Install Selenium:
+3. Install Selenium:
     *   `pip install selenium`
 
 4. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
