@@ -14,7 +14,7 @@ Basically there are utility scripts that run and log into the client's [BET.co.z
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **AND JUST LIKE THAT YOU KNOW THE RISE & FALL OF YOUR STONKS !!!!**
 
 
-## Installation
+## Get Started
 
 1. Obtain Google API for authentication:
     *   Follow the instructions [here](https://gspread.readthedocs.io/en/latest/oauth2.html#oauth-credentials)
