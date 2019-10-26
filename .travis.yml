@@ -17,6 +17,7 @@ before_install:
   - pip install gspread
   - pip install --upgrade oauth2client
   - pip install aenum
+  - pip install loguru
   - pip install -r requirements.txt
 
 stages:
