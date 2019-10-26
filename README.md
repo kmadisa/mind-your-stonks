@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/kmadisa/mind-your-stonks.svg?branch=master)](https://travis-ci.org/kmadisa/mind-your-stonks)
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Mind your *stonks*
 
 
