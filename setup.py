@@ -25,7 +25,8 @@ setup(name="mind your stonks",
       zip_safe=False,
       include_package_data=True,
       package_data={},
-      scripts=[],
+      scripts=["scripts/query_balance.py"],
       entry_points={
-          'console_scripts': []}
+          'console_scripts': []
+          }
       )
