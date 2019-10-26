@@ -50,7 +50,7 @@ Figure 1. A snapshot of the spreadsheet columns.
 ## Usage
 
 ```bash
-python bet_stats.py -h
+python query_balance.py -h
 usage: query_balance.py [-h] [--update-spreadsheet UPDATE_SPREADSHEET]
                         username password
 
