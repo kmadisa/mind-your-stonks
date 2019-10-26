@@ -56,26 +56,28 @@ def main():
 
     better.sign_out()
 
-    gsheet_manager = GoogleSheetManager(credentials_path=opts.update_spreadsheet[1],
-                                         sheet_id="1DWRxtnTIHiRuQ9w1Yq4TiZJqidIZhguiGadYDNgnZsI")
-    gsheet_manager.start_session()
+    if opts.update_spreadsheet:
 
-    previous_row_num = len(gsheet_manager.get_all_rows())
-    current_row_num = previous_row_num + 1
-    table_entry["Gain_loss"] = "=MINUS(SUM({0}{2},{1}{2}),{0}{3})".format(
-        SpreadsheetColumn.BALANCE, SpreadsheetColumn.MONEY_IN_BETS, current_row_num,
-        previous_row_num
-    )
-    table_entry["Percentage_increase"] = "=ROUND(MINUS({0}{1},{0}{2})/{0}{2}, 2)".format(
-        SpreadsheetColumn.BALANCE, current_row_num, previous_row_num)
-    
-    # Write to the spreadsheet
-    # Spreadsheet columns
-    # | Date | Timestamp | Money in bets | Balance | Loss/Gain | % Increase |
-    logger.info("Row data: {}".format(table_entry.values()))
-    gsheet_manager.append_row(list(table_entry.values()))
+        gsheet_manager = GoogleSheetManager(credentials_path=opts.update_spreadsheet[1],
+                                            sheet_id="1DWRxtnTIHiRuQ9w1Yq4TiZJqidIZhguiGadYDNgnZsI")
+        gsheet_manager.start_session()
 
-    gsheet_manager.close_session()
+        previous_row_num = len(gsheet_manager.get_all_rows())
+        current_row_num = previous_row_num + 1
+        table_entry["Gain_loss"] = "=MINUS(SUM({0}{2},{1}{2}),{0}{3})".format(
+            SpreadsheetColumn.BALANCE, SpreadsheetColumn.MONEY_IN_BETS, current_row_num,
+            previous_row_num
+        )
+        table_entry["Percentage_increase"] = "=ROUND(MINUS({0}{1},{0}{2})/{0}{2}, 2)".format(
+            SpreadsheetColumn.BALANCE, current_row_num, previous_row_num)
+
+        # Write to the spreadsheet
+        # Spreadsheet columns
+        # | Date | Timestamp | Money in bets | Balance | Loss/Gain | % Increase |
+        logger.info("Row data: {}".format(table_entry.values()))
+        gsheet_manager.append_row(list(table_entry.values()))
+
+        gsheet_manager.close_session()
 
 if __name__ == "__main__":
     main()
