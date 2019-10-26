@@ -23,18 +23,15 @@ parser = argparse.ArgumentParser(description="Scrape the BET.co.za website"
                                  " to obtain the account balance. It also"
                                  " writes the data to a Google Spreadsheet.")
 parser.add_argument(
-    "--username",
-    required=True,
+    "username",
     help="Bet.co.za registered email address",)
 parser.add_argument(
-    "--password",
-    required=True, 
+    "password",
     help="Bet.co.za account password.",)
 parser.add_argument(
     "--update-spreadsheet",
     help="Update spreadsheet with new data. This requires the client_secret.json"
-        " file for authentication. It is downloaded from the Google Developers' Console.",
-    nargs=2,)
+        " file for authentication. It is downloaded from the Google Developers' Console.",)
 
 def main():
 
