@@ -20,6 +20,8 @@ before_install:
   - pip install loguru
   - pip install -r requirements.txt
 
+install:
+  - pip install .
 stages:
   - read_bet
   - publish_sheets
