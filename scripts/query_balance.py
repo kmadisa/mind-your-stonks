@@ -55,7 +55,7 @@ def main():
 
     if opts.update_spreadsheet:
 
-        gsheet_manager = GoogleSheetManager(credentials_path=opts.update_spreadsheet[1],
+        gsheet_manager = GoogleSheetManager(credentials_path=opts.update_spreadsheet,
                                             sheet_id="1DWRxtnTIHiRuQ9w1Yq4TiZJqidIZhguiGadYDNgnZsI")
         gsheet_manager.start_session()
 
