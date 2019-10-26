@@ -16,6 +16,8 @@ before_install:
   - geckodriver --version || exit 1
   - pip install gspread
   - pip install --upgrade oauth2client
+  - pip install aenum
+  - pip install -r requirements.txt
 
 stages:
   - read_bet
