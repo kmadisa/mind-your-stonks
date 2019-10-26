@@ -1,5 +1,6 @@
 import time
 import random
+import psutil
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
