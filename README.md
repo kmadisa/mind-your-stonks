@@ -8,7 +8,7 @@
 
 The purpose of this project is to provide [BET.co.za](https://bet.co.za) clients an easier way to keep track of the changes occurring in their account balance.
 
-Basically there are utility scripts that run and log into the client's [BET.co.za](https://bet.co.za) account (using [Selenium](https://selenium-python.readthedocs.io/)) and read the value of the current balance and uploads the data to a [Google Sheets](https://docs.google.com/spreadsheets/u/0/), where then it can be visualized.
+Basically there is utility script that run and log into the client's [BET.co.za](https://bet.co.za) account (using [Selenium](https://selenium-python.readthedocs.io/)) and read the value of the current balance and uploads the data to a [Google Sheets](https://docs.google.com/spreadsheets/u/0/), where then it can be visualized.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **AND JUST LIKE THAT YOU KNOW THE RISE & FALL OF YOUR STONKS !!!!**
@@ -28,46 +28,48 @@ Basically there are utility scripts that run and log into the client's [BET.co.z
 3. Install Selenium:
     *   `pip install selenium`
 
-4. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
+4. Install the python-gspread-sheets package:
+    *   `pip install -r requirements.txt`
 
-![Screenshot from 2019-10-23 21-00-27](https://user-images.githubusercontent.com/16665803/67426299-18d81200-f5da-11e9-94cd-105195975b3d.png)
+5. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
+
+![Screenshot from 2019-10-26 15-57-25](https://user-images.githubusercontent.com/16665803/67620667-959d0300-f809-11e9-9048-eed3f950521e.png)
 Figure 1. A snapshot of the spreadsheet columns.
 
 #### Table columns
-   * *Date*: date reading was made
-   * *Balance*: the current balance in the account in S.A rands
-   * *% Increase*: calculated from the previous known balance and the current one (+ money in bets)
-   * *Timestamp*: indicated when the script logged into the account
-   * *Money in bets*: the amount of money placed in a bet which is still unresolved
-   * *Actual Loss/Gain*: difference between the previous known balance and the current one (+ money in bets)
-
+   * *Date*: date reading was made (yyyy-mm-dd).
+   * *Timestamp*: indicated when the script logged into the account hh:mm PM/AM.
+   * *Balance*: the current balance in the account in S.A rands.
+   * *Money in bets*: the amount of money placed in a bet which is still unresolved.
+   * *Actual Loss/Gain*: difference between the previous known balance and the current one
+                         (+ money in bets).
+   * *% Increase*: calculated from the previous known balance and the current one (+ money in bets).
 
 ## Usage
 
-At the moment the project has two scripts that have to be run in sequence (not the smartest way at the moment) `bet_stats.py` and `spreadsheet.py`, respectively. In simple terms, the `bet_stats.py` reads and aggregates the data from the [BET.co.za](https://bet.co.za) site and writes it to a temporary csv file. The `spreasheet.py` script reads the csv file and writes the data to the Google Spreadsheet.
-
 ```bash
 python bet_stats.py -h
-usage: bet_stats.py [-h] --username USERNAME --password PASSWORD
+usage: query_balance.py [-h] [--update-spreadsheet UPDATE_SPREADSHEET]
+                        username password
+
+Scrape the BET.co.za website to obtain the account balance. It also writes the
+data to a Google Spreadsheet.
+
+positional arguments:
+  username              Bet.co.za registered email address
+  password              Bet.co.za account password.
 
 optional arguments:
   -h, --help            show this help message and exit
-  --username USERNAME  Bet.co.za registered email address
-  --password PASSWORD  Bet.co.za account password
-  
-python spreadsheet.py -h
-usage: spreadsheet.py [-h] --client-secrets CLIENT_SECRET_FILE
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --client-secrets CLIENT_SECRET_FILE
-                        Google Json file containing secrets.
+  --update-spreadsheet UPDATE_SPREADSHEET
+                        Update spreadsheet with new data. This requires the
+                        client_secret.json file for authentication. It is
+                        downloaded from the Google Developers' Console.
 ```
 
 Typical usage:
 ```bash
-python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
-python scripts/spreadsheet.py --client-secrets ./client_secret.json
+query_balance.py $USERNAME $PASSWORD --update-spreadsheet ./client_secret.jsons
 ```
 
 ## Travis CI automated daily balance reader

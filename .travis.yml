@@ -1,6 +1,8 @@
 
 language: python
 
+python: 3.6
+
 addons:
   firefox: latest
 
@@ -14,7 +16,13 @@ before_install:
   - geckodriver --version || exit 1
   - pip install gspread
   - pip install --upgrade oauth2client
+  - pip install aenum
+  - pip install loguru
+  - pip install psutil
+  - pip install -r requirements.txt
 
+install:
+  - pip install .
 stages:
   - read_bet
   - publish_sheets
@@ -23,11 +31,10 @@ jobs:
   include:
     - stage: read_bet
       script:
-        - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+        - query_balance.py $USERNAME $PASSWORD
       if: NOT branch = master
 
     - stage: publish_sheets
       if: NOT type IN (pull_request) AND branch = master
       script:
-        - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
-        - python scripts/spreadsheet.py --client-secrets ./client_secret.json
+        - query_balance.py $USERNAME $PASSWORD --update-spreadsheet ./client_secret.json
