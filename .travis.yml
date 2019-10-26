@@ -1,6 +1,8 @@
 
 language: python
 
+python: 3.6
+
 addons:
   firefox: latest
 
@@ -23,11 +25,10 @@ jobs:
   include:
     - stage: read_bet
       script:
-        - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
+        - python3 scripts/query_balance.py --username $USERNAME --password $PASSWORD
       if: NOT branch = master
 
     - stage: publish_sheets
       if: NOT type IN (pull_request) AND branch = master
       script:
-        - python scripts/bet_stats.py --username $USERNAME --password $PASSWORD
-        - python scripts/spreadsheet.py --client-secrets ./client_secret.json
+        - python3 scripts/query_balance.py --username $USERNAME --password $PASSWORD --update-spreadsheet True ./client_secret.json
