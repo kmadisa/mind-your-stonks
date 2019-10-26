@@ -37,4 +37,4 @@ jobs:
     - stage: publish_sheets
       if: NOT type IN (pull_request) AND branch = master
       script:
-        - query_balance.py $USERNAME $PASSWORD --update-spreadsheet ./client_secret.json
+        - query_balance.py $USERNAME $PASSWORD --update-spreadsheet client_secret.json
