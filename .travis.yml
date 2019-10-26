@@ -31,10 +31,10 @@ jobs:
   include:
     - stage: read_bet
       script:
-        - python3 scripts/query_balance.py --username $USERNAME --password $PASSWORD
+        - query_balance.py $USERNAME $PASSWORD
       if: NOT branch = master
 
     - stage: publish_sheets
       if: NOT type IN (pull_request) AND branch = master
       script:
-        - python3 scripts/query_balance.py --username $USERNAME --password $PASSWORD --update-spreadsheet True ./client_secret.json
+        - query_balance.py $USERNAME $PASSWORD --update-spreadsheet ./client_secret.json
