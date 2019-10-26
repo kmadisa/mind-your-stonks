@@ -74,7 +74,6 @@ def main():
         # Write to the spreadsheet
         # Spreadsheet columns
         # | Date | Timestamp | Money in bets | Balance | Loss/Gain | % Increase |
-        logger.info("Row data: {}".format(table_entry.values()))
         gsheet_manager.append_row(list(table_entry.values()))
 
         gsheet_manager.close_session()
