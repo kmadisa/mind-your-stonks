@@ -1,4 +1,5 @@
 import time
+import random
 from aenum import Constant
 
 from datetime import datetime
@@ -34,7 +35,7 @@ class BetMonth(Constant):
      AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER) = range(1, 13)
     LAST_7_DAYS = "7d"
     LAST_30_DAYS = "30"
-    ALL = "all"
+    ALL = "All"
 
 
 class BetClient(object):
@@ -150,3 +151,53 @@ class BetClient(object):
                 money_invested += float(stake.text)
         
         return money_invested
+
+    def export_betting_history_data(self, month=str(BetMonth.ALL)):
+        self.filter_betting_history(BetStatus.ALL, month=month)
+        bets = []
+        num_of_pages = self._get_number_of_pages_for_table()
+
+        for page in range(1, num_of_pages+1):
+            if page > 1:
+                # Need to get the pagination element again or else raises
+                # StaleElementReferenceException
+                pagination = self.driver.find_element_by_class_name("pagination")
+                print("Page number: {}".format(page))
+                page_ = pagination.find_element_by_link_text('{}'.format(page))
+                page_.click()
+                time.sleep(random.randint(2, 3))
+
+            # Get the table object
+            table = self.driver.find_element_by_class_name("stdTable")
+
+            # Get all the rows on columns. Attempted to extract the data by rows,
+            # however the getting the .text attribute resulted in string that would be
+            # difficult to split up (no unique delimiter). 
+            tickets = table.find_elements_by_xpath(
+                "//tr/td["+str(BetHistoryTableColumn.TICKET)+"]")
+            event_dates = table.find_elements_by_xpath(
+                "//tr/td["+str(BetHistoryTableColumn.EVENT_DATE)+"]")
+            tournaments = table.find_elements_by_xpath(
+                "//tr/td["+str(BetHistoryTableColumn.TOURNAMENT)+"]")
+            events = table.find_elements_by_xpath(
+                "//tr/td["+str(BetHistoryTableColumn.EVENT)+"]")
+            selections = table.find_elements_by_xpath(
+                "//tr/td["+str(BetHistoryTableColumn.SELECTION)+"]")
+            bet_types = table.find_elements_by_xpath(
+                "//tr/td["+str(BetHistoryTableColumn.BET_TYPE)+"]")
+            stakes = table.find_elements_by_xpath(
+                "//tr/td["+str(BetHistoryTableColumn.STAKE)+"]")
+            potential_wins = table.find_elements_by_xpath(
+                "//tr/td["+str(BetHistoryTableColumn.POTENTIAL_WIN)+"]")
+            statuses = table.find_elements_by_xpath(
+                "//tr/td["+str(BetHistoryTableColumn.STATUS)+"]")
+
+            for (ticket, event_date, tournament, event,
+                 selection, bet_type, stake, potential_win,
+                 status) in zip(tickets, event_dates, tournaments, events,
+                 selections, bet_types, stakes, potential_wins,
+                 statuses):
+                 bets.append([ticket.text, event_date.text, tournament.text, event.text,
+                              selection.text, bet_type.text, stake.text, potential_win.text, status.text])
+
+        return bets
