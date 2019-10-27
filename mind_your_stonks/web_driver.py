@@ -63,9 +63,13 @@ class WebDriverSetup(object):
         sleeper()
         PROCNAME = "geckodriver"
         self.logger.info("Cleaning up by killing {} process", PROCNAME)
-        _ = [
-            proc.terminate()
-            for proc in psutil.process_iter()
-            if proc.name() == PROCNAME
-        ]
+        try:
+            _ = [
+                 proc.terminate()
+                 for proc in psutil.process_iter()
+                 if proc.name() == PROCNAME
+            ]
+        except:
+            pass
+
         self.logger.info("Done...")
