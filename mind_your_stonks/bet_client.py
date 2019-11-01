@@ -50,9 +50,9 @@ class BetClient(object):
         Parameters
         ----------
         username : str
-            Registered username for the https://www.bet.co.za site
+            Registered username for the https://www.bet.co.za site.
         password : str
-            Registered password for the https://www.bet.co.za site
+            Registered password for the https://www.bet.co.za site.
         headless : bool
             Flag to run the Firefox browser headless or not.
         """
@@ -71,7 +71,7 @@ class BetClient(object):
         self.driver.find_element_by_name("submitted").click()
 
     def sign_out(self):
-        """Log out of the https://www.bet.co.za site
+        """Log out of the https://www.bet.co.za site.
         """
         self.driver.find_element_by_xpath("//*[@id='block-logout']").click()
         self.web_setup.close_session()
