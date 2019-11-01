@@ -154,17 +154,17 @@ class BetClient(object):
 
     def export_betting_history_data(self, month=str(BetMonth.ALL)):
         self.filter_betting_history(BetStatus.ALL, month=month)
-        bets = []
-        num_of_pages = self._get_number_of_pages_for_table()
+        betting_history = []
+        number_of_pages = self._get_number_of_pages_for_table()
 
-        for page in range(1, num_of_pages+1):
-            if page > 1:
+        for page_number in range(1, number_of_pages+1):
+            if page_number > 1:
                 # Need to get the pagination element again or else raises
                 # StaleElementReferenceException
                 pagination = self.driver.find_element_by_class_name("pagination")
-                print("Page number: {}".format(page))
-                page_ = pagination.find_element_by_link_text('{}'.format(page))
-                page_.click()
+                print("Page number: {}".format(page_number))
+                page = pagination.find_element_by_link_text('{}'.format(page_number))
+                page.click()
                 time.sleep(random.randint(2, 3))
 
             # Get the table object
@@ -172,7 +172,7 @@ class BetClient(object):
 
             # Get all the rows on columns. Attempted to extract the data by rows,
             # however the getting the .text attribute resulted in string that would be
-            # difficult to split up (no unique delimiter). 
+            # difficult to split up (no unique delimiter).
             tickets = table.find_elements_by_xpath(
                 "//tr/td["+str(BetHistoryTableColumn.TICKET)+"]")
             event_dates = table.find_elements_by_xpath(
@@ -197,7 +197,10 @@ class BetClient(object):
                  status) in zip(tickets, event_dates, tournaments, events,
                  selections, bet_types, stakes, potential_wins,
                  statuses):
-                 bets.append([ticket.text, event_date.text, tournament.text, event.text,
-                              selection.text, bet_type.text, stake.text, potential_win.text, status.text])
+                 betting_history.append([
+                     ticket.text, event_date.text, tournament.text,
+                     event.text, selection.text, bet_type.text, stake.text,
+                     potential_win.text, status.text
+                     ])
 
-        return bets
+        return betting_history
