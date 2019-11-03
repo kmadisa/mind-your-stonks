@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.org/kmadisa/mind-your-stonks.svg?branch=master)](https://travis-ci.org/kmadisa/mind-your-stonks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![GitHub last commit](https://img.shields.io/github/last-commit/kmadisa/mind-your-stonks.svg)
+![GitHub issues](https://img.shields.io/github/issues/kmadisa/mind-your-stonks.svg)
+![GitHub stars](https://img.shields.io/github/stars/kmadisa/mind-your-stonks.svg?style=social)
+
 # Mind your *stonks*
 
 
