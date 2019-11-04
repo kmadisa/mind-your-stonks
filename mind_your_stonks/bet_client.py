@@ -175,32 +175,12 @@ class BetClient(object):
             # difficult to split up (no unique delimiter).
             tickets = table.find_elements_by_xpath(
                 "//tr/td["+str(BetHistoryTableColumn.TICKET)+"]")
-            event_dates = table.find_elements_by_xpath(
-                "//tr/td["+str(BetHistoryTableColumn.EVENT_DATE)+"]")
-            tournaments = table.find_elements_by_xpath(
-                "//tr/td["+str(BetHistoryTableColumn.TOURNAMENT)+"]")
-            events = table.find_elements_by_xpath(
-                "//tr/td["+str(BetHistoryTableColumn.EVENT)+"]")
-            selections = table.find_elements_by_xpath(
-                "//tr/td["+str(BetHistoryTableColumn.SELECTION)+"]")
-            bet_types = table.find_elements_by_xpath(
-                "//tr/td["+str(BetHistoryTableColumn.BET_TYPE)+"]")
-            stakes = table.find_elements_by_xpath(
-                "//tr/td["+str(BetHistoryTableColumn.STAKE)+"]")
-            potential_wins = table.find_elements_by_xpath(
-                "//tr/td["+str(BetHistoryTableColumn.POTENTIAL_WIN)+"]")
-            statuses = table.find_elements_by_xpath(
-                "//tr/td["+str(BetHistoryTableColumn.STATUS)+"]")
 
-            for (ticket, event_date, tournament, event,
-                 selection, bet_type, stake, potential_win,
-                 status) in zip(tickets, event_dates, tournaments, events,
-                 selections, bet_types, stakes, potential_wins,
-                 statuses):
-                 betting_history.append([
-                     ticket.text, event_date.text, tournament.text,
-                     event.text, selection.text, bet_type.text, stake.text,
-                     potential_win.text, status.text
-                     ])
+            for ticket in tickets:
+                ticket_link = self.driver.find_element_by_link_text(ticket.text)
+                betting_history_window = self.driver.window_handles[0]
+                ticket_link.click()
+                time.sleep(random.randint(2, 3))
+                self.driver.switch_to.window(betting_history_window)
 
         return betting_history
