@@ -162,7 +162,6 @@ class BetClient(object):
                 # Need to get the pagination element again or else raises
                 # StaleElementReferenceException
                 pagination = self.driver.find_element_by_class_name("pagination")
-                print("Page number: {}".format(page_number))
                 page = pagination.find_element_by_link_text('{}'.format(page_number))
                 page.click()
                 time.sleep(random.randint(2, 3))
@@ -181,6 +180,7 @@ class BetClient(object):
                 betting_history_window = self.driver.window_handles[0]
                 ticket_link.click()
                 time.sleep(random.randint(2, 3))
+                # TODO (kmadisa 06-09-2019) Extract information fromt the ticket.
                 self.driver.switch_to.window(betting_history_window)
 
         return betting_history
