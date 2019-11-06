@@ -1,15 +1,13 @@
-import time
-import random
 import psutil
+from psutil import NoSuchProcess
 
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
 from loguru import logger
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.firefox.options import Options
 
-TIMEOUT = 60
 
-def sleeper(min_range=10, max_range=30):
-    time.sleep(random.randint(min_range, max_range))
+TIMEOUT = 60.00
 
 
 class WebDriverSetup(object):
@@ -24,7 +22,7 @@ class WebDriverSetup(object):
         self.driver = webdriver.Firefox(
             firefox_profile=self._profile, options=self._options, timeout=self._timeout
         )
-        time.sleep(0.3)
+
         if self._options.headless:
             self.logger.info("Headless Firefox Initialized.")
 
@@ -33,8 +31,7 @@ class WebDriverSetup(object):
             self.logger.debug(f"Navigating to {url}.")
             self.driver.get(url)
             self.driver.set_page_load_timeout(self._timeout)
-            self.logger.debug("Successfully opened the url.")
-            time.sleep(0.5)
+            self.logger.debug(f"Successfully opened the url: {url}.")
         except TimeoutException:
             self.logger.exception("Timed-out while loading page.")
             self.close_session()
@@ -60,16 +57,15 @@ class WebDriverSetup(object):
         self.logger.info("Closing the browser...")
         self.driver.close()
         self.driver.quit()
-        sleeper()
         PROCNAME = "geckodriver"
-        self.logger.info("Cleaning up by killing {} process", PROCNAME)
+        self.logger.info(f"Cleaning up by killing {PROCNAME} process.")
         try:
             _ = [
                  proc.terminate()
                  for proc in psutil.process_iter()
                  if proc.name() == PROCNAME
             ]
-        except:
-            pass
+        except NoSuchProcess:
+            self.logger.debug(f"Process named {PROCNAME} process does not exist.")
 
         self.logger.info("Done...")
