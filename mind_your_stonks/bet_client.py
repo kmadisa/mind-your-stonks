@@ -148,6 +148,8 @@ class BetClient(object):
         
         return num_of_pages
 
+    # TODO (kmadisa 06-09-2019) Find a way to refactor the duplicate code inside
+    # the `compute_money_invested` and `export_betting_history_data` methods.
     def compute_money_invested(self):
         money_invested = 0.00
         number_of_pages = self._get_number_of_pages_for_table()
