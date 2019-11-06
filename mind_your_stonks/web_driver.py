@@ -34,7 +34,7 @@ class WebDriverSetup(object):
             self.driver.get(url)
             WebDriverWait(self.driver, TIMEOUT).until(condition.url_to_be(url))
             self.logger.debug(f"Successfully opened the url: {url}.")
-        except TimeoutException as te:
+        except TimeoutException:
             self.logger.exception("Timed-out while loading page.")
             self.close_session()
 
