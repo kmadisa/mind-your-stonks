@@ -125,7 +125,7 @@ class BetClient(object):
         # Click on the 'Go' button to filter bets
         form_filter.find_element_by_class_name("inputBtn").click()
         WebDriverWait(self.driver, TIMEOUT).unitl(
-            condition.visibility_of_element_located(By.CLASS_NAME, "stdTable"))
+            condition.presence_of_element_located(By.CLASS_NAME, "stdTable"))
 
     def _get_number_of_pages_for_table(self):
         # Pages can come in different forms
@@ -163,7 +163,7 @@ class BetClient(object):
                 page = pagination.find_element_by_link_text(f"{page_number}")
                 page.click()
                 WebDriverWait(self.driver, TIMEOUT).unitl(
-                    condition.visibility_of_element_located(By.CLASS_NAME, "stdTable"))
+                    condition.presence_of_element_located(By.CLASS_NAME, "stdTable"))
             
             # Get the table object
             table = self.driver.find_element_by_class_name("stdTable")
@@ -192,7 +192,7 @@ class BetClient(object):
                 page = pagination.find_element_by_link_text(f"{page_number}")
                 page.click()
                 WebDriverWait(self.driver, TIMEOUT).unitl(
-                    condition.visibility_of_element_located(By.CLASS_NAME, "stdTable"))
+                    condition.presence_of_element_located(By.CLASS_NAME, "stdTable"))
 
             # Get the table object
             table = self.driver.find_element_by_class_name("stdTable")
