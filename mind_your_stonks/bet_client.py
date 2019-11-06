@@ -19,6 +19,8 @@ TIMEOUT = 2.00
 
 # Betting History table columns
 # | Ticket | Event Date | Tournament | Event | Selection | Bet Type | Stake | Potential Win | Status |
+
+
 class BetHistoryTableColumn(Constant):
     (TICKET, EVENT_DATE, TOURNAMENT, EVENT, SELECTION, BET_TYPE,
      STAKE, POTENTIAL_WIN, STATUS)  = range(1, 10)

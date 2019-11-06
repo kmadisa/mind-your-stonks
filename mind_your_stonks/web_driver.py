@@ -5,8 +5,6 @@ from loguru import logger
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as condition
 
 
 TIMEOUT = 60.00
