@@ -1,3 +1,4 @@
+import time
 from aenum import Constant
 from datetime import datetime
 
@@ -132,7 +133,6 @@ class BetClient(object):
         # '' ==> means just one page
         # '12»' ==> means just two pages in total
         # '1234567»[12]' ==> means 12 pages in total
-        # 
         pagination = self.driver.find_element_by_class_name("pagination")
         pagination_text = pagination.text
         num_of_pages = 0
