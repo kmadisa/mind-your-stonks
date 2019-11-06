@@ -2,7 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kmadisa/mind-your-stonks.svg)
 ![GitHub issues](https://img.shields.io/github/issues/kmadisa/mind-your-stonks.svg)
-![GitHub stars](https://img.shields.io/github/stars/kmadisa/mind-your-stonks.svg?style=social)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ce9da614c0034a3ca373513e119705e0)](https://www.codacy.com/manual/katleho.madisa47/mind-your-stonks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kmadisa/mind-your-stonks&amp;utm_campaign=Badge_Grade)
 
 # Mind your *stonks*
 
