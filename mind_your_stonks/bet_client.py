@@ -5,12 +5,16 @@ from aenum import Constant
 from datetime import datetime
 
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as condition
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 from mind_your_stonks.web_driver import WebDriverSetup
 
 
 BET_URL = "https://www.bet.co.za"
+TIMEOUT = 2.00
 
 # Solution for creating a set of constants found here
 # https://codereview.stackexchange.com/questions/193090/python-constant-class-different-enum-implementation
@@ -72,9 +76,15 @@ class BetClient(object):
 
     def goto_betting_history(self):
         self.driver.find_element_by_link_text("My Betting History").click()
+        WebDriverWait(self.driver, TIMEOUT).unitl(
+            condition.url_to_be(
+                "https://www.bet.co.za/index.php/betting/history/action/betHistory/"))
     
     def goto_account_history(self):
         self.driver.find_element_by_link_text("My Account History").click()
+        WebDriverWait(self.driver, TIMEOUT).unitl(
+            condition.url_to_be(
+                "https://www.bet.co.za/index.php/betting/history/action/translog/"))
 
     def filter_betting_history(self, status, month=BetMonth.LAST_7_DAYS,
                                year=str(datetime.now().year)):
@@ -108,6 +118,8 @@ class BetClient(object):
 
         # Click on the 'Go' button to filter bets
         form_filter.find_element_by_class_name("inputBtn").click()
+        WebDriverWait(self.driver, TIMEOUT).unitl(
+            condition.visibility_of_element_located(By.CLASS_NAME, "stdTable"))
 
     def _get_number_of_pages_for_table(self):
         # Pages can come in different forms
@@ -164,7 +176,8 @@ class BetClient(object):
                 pagination = self.driver.find_element_by_class_name("pagination")
                 page = pagination.find_element_by_link_text('{}'.format(page_number))
                 page.click()
-                time.sleep(random.randint(2, 3))
+                WebDriverWait(self.driver, TIMEOUT).unitl(
+                    condition.visibility_of_element_located(By.CLASS_NAME, "stdTable"))
 
             # Get the table object
             table = self.driver.find_element_by_class_name("stdTable")
@@ -177,9 +190,11 @@ class BetClient(object):
 
             for ticket in tickets:
                 ticket_link = self.driver.find_element_by_link_text(ticket.text)
-                betting_history_window = self.driver.window_handles[0]
+                window_handles = self.driver.window_handles
+                betting_history_window = window_handles[0]
                 ticket_link.click()
-                time.sleep(random.randint(2, 3))
+                WebDriverWait(self.driver, TIMEOUT).unitl(
+                    condition.new_window_is_opened(window_handles))
                 # TODO (kmadisa 06-09-2019) Extract information fromt the ticket.
                 self.driver.switch_to.window(betting_history_window)
 
