@@ -1,5 +1,3 @@
-import time
-import random
 import psutil
 
 from loguru import logger

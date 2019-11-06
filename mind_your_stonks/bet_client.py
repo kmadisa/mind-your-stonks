@@ -1,7 +1,4 @@
-import time
-import random
 from aenum import Constant
-
 from datetime import datetime
 
 from selenium.webdriver.firefox.options import Options
