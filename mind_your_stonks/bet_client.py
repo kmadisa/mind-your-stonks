@@ -59,11 +59,11 @@ class BetClient(object):
         self.driver.find_element_by_name("submitted").click()
         WebDriverWait(self.driver, TIMEOUT).unitl(
             condition.url_to_be("https://www.bet.co.za/index.php/user/account/"))
-        self.web_setup.logger.info("Succesfully logged into %s", BET_URL)
+        self.web_setup.logger.info(f"Succesfully logged into {BET_URL}.")
 
     def sign_out(self):
         self.driver.find_element_by_xpath("//*[@id='block-logout']").click()
-        self.web_setup.logger.info("Succesfully logged out of %s", BET_URL)
+        self.web_setup.logger.info("Succesfully logged out of {BET_URL}.")
         self.web_setup.close_session()
 
     @property
@@ -111,19 +111,19 @@ class BetClient(object):
         selector = Select(form_filter.find_element_by_id("status"))
         # Select option in wager status dropdown
         selector.select_by_visible_text(status)
-        self.web_setup.logger.info("Filtering by wager status: %s.", status)
+        self.web_setup.logger.info(f"Filtering by wager status: {status}.")
 
         if month != BetMonth.LAST_7_DAYS:
             selector = Select(form_filter.find_element_by_class_name("date_range"))
             # Select option in month dropdown
             selector.select_by_visible_text(month)
-            self.web_setup.logger.info("Filtering by month: %s.", month)
+            self.web_setup.logger.info(f"Filtering by month: {month}.")
 
         if year != str(datetime.now().year):
             selector = Select(form_filter.find_element_by_class_name("year"))
             # Select option in year dropdown
             selector.select_by_visible_text(year)
-            self.web_setup.logger.info("Filtering by year: %s.", year)
+            self.web_setup.logger.info(f"Filtering by year: {year}.")
 
         # Click on the 'Go' button to filter bets
         form_filter.find_element_by_class_name("inputBtn").click()
@@ -158,12 +158,12 @@ class BetClient(object):
         last_page = number_of_pages + 1
 
         for page_number in range(first_page, last_page):
-            self.web_setup.logger.info("Computing stakes on page: %s.", page_number)
+            self.web_setup.logger.info(f"Computing stakes on page: {page_number}.")
             if page_number > first_page:
                 # Need to get the pagination element again or else raises
                 # StaleElementReferenceException
                 pagination = self.driver.find_element_by_class_name("pagination")
-                page = pagination.find_element_by_link_text('{}'.format(page_number))
+                page = pagination.find_element_by_link_text(f"{page_number}")
                 page.click()
                 WebDriverWait(self.driver, TIMEOUT).unitl(
                     condition.visibility_of_element_located(By.CLASS_NAME, "stdTable"))
@@ -187,12 +187,12 @@ class BetClient(object):
         last_page = number_of_pages + 1
 
         for page_number in range(first_page, last_page):
-            self.web_setup.logger.info("Computing stakes on page: %s.", page_number)
+            self.web_setup.logger.info(f"Computing stakes on page: {page_number}.")
             if page_number > first_page:
                 # Need to get the pagination element again or else raises
                 # StaleElementReferenceException
                 pagination = self.driver.find_element_by_class_name("pagination")
-                page = pagination.find_element_by_link_text('{}'.format(page_number))
+                page = pagination.find_element_by_link_text(f"{page_number}")
                 page.click()
                 WebDriverWait(self.driver, TIMEOUT).unitl(
                     condition.visibility_of_element_located(By.CLASS_NAME, "stdTable"))
