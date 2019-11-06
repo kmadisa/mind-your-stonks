@@ -1,7 +1,9 @@
 import psutil
+from psutil import NoSuchProcess
 
 from loguru import logger
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as condition
@@ -65,7 +67,7 @@ class WebDriverSetup(object):
                  for proc in psutil.process_iter()
                  if proc.name() == PROCNAME
             ]
-        except:
+        except NoSuchProcess:
             self.logger.debug(f"Process named {PROCNAME} process does not exist.")
 
         self.logger.info("Done...")
