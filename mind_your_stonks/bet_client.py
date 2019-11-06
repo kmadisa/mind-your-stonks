@@ -2,7 +2,6 @@ import time
 from aenum import Constant
 from datetime import datetime
 
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as condition
 from selenium.webdriver.support.select import Select
