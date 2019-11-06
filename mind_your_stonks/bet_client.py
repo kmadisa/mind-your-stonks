@@ -206,6 +206,7 @@ class BetClient(object):
                 "//tr/td["+str(BetHistoryTableColumn.TICKET)+"]")
 
             for ticket in tickets:
+                self.web_setup.logger(f"Processing ticket {ticket.text}")
                 ticket_link = self.driver.find_element_by_link_text(ticket.text)
                 window_handles = self.driver.window_handles
                 betting_history_window = window_handles[0]
