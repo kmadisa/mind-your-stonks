@@ -57,6 +57,9 @@ class BetClient(object):
         self.driver.find_element_by_name("frmPassword").send_keys(self._password)
         self.driver.find_element_by_name("frmForceTerms").click()
         self.driver.find_element_by_name("submitted").click()
+        WebDriverWait(self.driver, TIMEOUT).unitl(
+            condition.url_to_be("https://www.bet.co.za/index.php/user/account/"))
+        self.web_setup.logger.info("Succesfully logged into %s", BET_URL)
 
     def sign_out(self):
         self.driver.find_element_by_xpath("//*[@id='block-logout']").click()
