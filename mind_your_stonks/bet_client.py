@@ -210,8 +210,7 @@ class BetClient(object):
                 window_handles = self.driver.window_handles
                 betting_history_window = window_handles[0]
                 ticket_link.click()
-                WebDriverWait(self.driver, TIMEOUT).unitl(
-                    condition.new_window_is_opened(window_handles))
+                time.sleep(TIMEOUT)
                 # TODO (kmadisa 06-09-2019) Extract information fromt the ticket.
                 self.driver.switch_to.window(betting_history_window)
 
