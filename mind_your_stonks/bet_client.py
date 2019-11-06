@@ -60,6 +60,7 @@ class BetClient(object):
 
     def sign_out(self):
         self.driver.find_element_by_xpath("//*[@id='block-logout']").click()
+        self.web_setup.logger.info("Succesfully logged out of %s", BET_URL)
         self.web_setup.close_session()
 
     @property
@@ -144,17 +145,22 @@ class BetClient(object):
 
     def compute_money_invested(self):
         money_invested = 0.00
-        num_of_pages = self._get_number_of_pages_for_table()
-        # Get the table object
-        table = self.driver.find_element_by_class_name("stdTable")
-        for page in range(1, num_of_pages+1):
-            if page > 1:
+        number_of_pages = self._get_number_of_pages_for_table()
+        first_page = 1
+        last_page = number_of_pages + 1
+
+        for page in range(first_page, last_page):
+            if page > first_page:
                 # Need to get the pagination element again or else raises
                 # StaleElementReferenceException
                 pagination = self.driver.find_element_by_class_name("pagination")
                 page_ = pagination.find_element_by_link_text('{}'.format(page))
                 page_.click()
+                WebDriverWait(self.driver, TIMEOUT).unitl(
+                    condition.visibility_of_element_located(By.CLASS_NAME, "stdTable"))
             
+            # Get the table object
+            table = self.driver.find_element_by_class_name("stdTable")
             # Get all the rows on column number 7 (Stake)
             stakes = table.find_elements_by_xpath(
                 "//tr/td["+str(BetHistoryTableColumn.STAKE)+"]")
@@ -168,9 +174,11 @@ class BetClient(object):
         self.filter_betting_history(BetStatus.ALL, month=month)
         betting_history = []
         number_of_pages = self._get_number_of_pages_for_table()
+        first_page = 1
+        last_page = number_of_pages + 1
 
-        for page_number in range(1, number_of_pages+1):
-            if page_number > 1:
+        for page_number in range(first_page, last_page):
+            if page_number > first_page:
                 # Need to get the pagination element again or else raises
                 # StaleElementReferenceException
                 pagination = self.driver.find_element_by_class_name("pagination")
