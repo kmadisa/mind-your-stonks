@@ -54,7 +54,7 @@ class BetClient(object):
         self.driver.find_element_by_name("frmPassword").send_keys(self._password)
         self.driver.find_element_by_name("frmForceTerms").click()
         self.driver.find_element_by_name("submitted").click()
-        WebDriverWait(self.driver, TIMEOUT).unitl(
+        WebDriverWait(self.driver, TIMEOUT).until(
             condition.url_to_be("https://www.bet.co.za/index.php/user/account/"))
         self.web_setup.logger.info(f"Succesfully logged into {BET_URL}.")
 
@@ -77,14 +77,14 @@ class BetClient(object):
 
     def goto_betting_history(self):
         self.driver.find_element_by_link_text("My Betting History").click()
-        WebDriverWait(self.driver, TIMEOUT).unitl(
+        WebDriverWait(self.driver, TIMEOUT).until(
             condition.url_to_be(
                 "https://www.bet.co.za/index.php/betting/history/action/betHistory/"))
         self.web_setup.logger.info("Switched to the Betting History page.")
     
     def goto_account_history(self):
         self.driver.find_element_by_link_text("My Account History").click()
-        WebDriverWait(self.driver, TIMEOUT).unitl(
+        WebDriverWait(self.driver, TIMEOUT).until(
             condition.url_to_be(
                 "https://www.bet.co.za/index.php/betting/history/action/translog/"))
         self.web_setup.logger.info("Switched to the Account History page.")
@@ -124,8 +124,8 @@ class BetClient(object):
 
         # Click on the 'Go' button to filter bets
         form_filter.find_element_by_class_name("inputBtn").click()
-        WebDriverWait(self.driver, TIMEOUT).unitl(
-            condition.presence_of_element_located(By.CLASS_NAME, "stdTable"))
+        WebDriverWait(self.driver, TIMEOUT).until(
+            condition.presence_of_element_located((By.CLASS_NAME, "stdTable")))
 
     def _get_number_of_pages_for_table(self):
         # Pages can come in different forms
@@ -164,9 +164,9 @@ class BetClient(object):
                 pagination = self.driver.find_element_by_class_name("pagination")
                 page = pagination.find_element_by_link_text(f"{page_number}")
                 page.click()
-                WebDriverWait(self.driver, TIMEOUT).unitl(
-                    condition.presence_of_element_located(By.CLASS_NAME, "stdTable"))
-            
+                WebDriverWait(self.driver, TIMEOUT).until(
+                    condition.presence_of_element_located((By.CLASS_NAME, "stdTable")))
+
             # Get the table object
             table = self.driver.find_element_by_class_name("stdTable")
             # Get all the rows on column number 7 (Stake)
@@ -193,8 +193,8 @@ class BetClient(object):
                 pagination = self.driver.find_element_by_class_name("pagination")
                 page = pagination.find_element_by_link_text(f"{page_number}")
                 page.click()
-                WebDriverWait(self.driver, TIMEOUT).unitl(
-                    condition.presence_of_element_located(By.CLASS_NAME, "stdTable"))
+                WebDriverWait(self.driver, TIMEOUT).until(
+                    condition.presence_of_element_located((By.CLASS_NAME, "stdTable")))
 
             # Get the table object
             table = self.driver.find_element_by_class_name("stdTable")
