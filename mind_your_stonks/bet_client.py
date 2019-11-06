@@ -81,7 +81,7 @@ class BetClient(object):
             condition.url_to_be(
                 "https://www.bet.co.za/index.php/betting/history/action/betHistory/"))
         self.web_setup.logger.info("Switched to the Betting History page.")
-    
+
     def goto_account_history(self):
         self.driver.find_element_by_link_text("My Account History").click()
         WebDriverWait(self.driver, TIMEOUT).until(
@@ -145,7 +145,7 @@ class BetClient(object):
         elif pagination_text.endswith("]"):
             # '1234567»[12]' -> 12
             num_of_pages = int(pagination_text.split("[")[-1].split("]")[0])
-        
+
         return num_of_pages
 
     # TODO (kmadisa 06-09-2019) Find a way to refactor the duplicate code inside
@@ -172,10 +172,10 @@ class BetClient(object):
             # Get all the rows on column number 7 (Stake)
             stakes = table.find_elements_by_xpath(
                 "//tr/td["+str(BetHistoryTableColumn.STAKE)+"]")
-        
+
             for stake in stakes:
                 money_invested += float(stake.text)
-        
+
         return money_invested
 
     def export_betting_history_data(self, month=str(BetMonth.ALL)):
