@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as condition
 
 
-TIMEOUT = 2.00
+TIMEOUT = 60.00
 
 
 class WebDriverSetup(object):
@@ -32,7 +32,7 @@ class WebDriverSetup(object):
         try:
             self.logger.debug(f"Navigating to {url}.")
             self.driver.get(url)
-            WebDriverWait(self.driver, TIMEOUT).until(condition.url_to_be(url))
+            self.driver.set_page_load_timeout(self._timeout)
             self.logger.debug(f"Successfully opened the url: {url}.")
         except TimeoutException:
             self.logger.exception("Timed-out while loading page.")
