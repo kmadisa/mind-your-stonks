@@ -1,8 +1,6 @@
-import time
 from aenum import Constant
 from datetime import datetime
 
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.select import Select
 
 from mind_your_stonks.web_driver import WebDriverSetup
@@ -15,9 +13,11 @@ BET_URL = "https://www.bet.co.za"
 
 # Betting History table columns
 # | Ticket | Event Date | Tournament | Event | Selection | Bet Type | Stake | Potential Win | Status |
+
+
 class BetHistoryTableColumn(Constant):
     (TICKET, EVENT_DATE, TOURNAMENT, EVENT, SELECTION, BET_TYPE,
-     STAKE, POTENTIAL_WIN, STATUS)  = range(1, 10)
+     STAKE, POTENTIAL_WIN, STATUS) = range(1, 10)
 
 
 class BetStatus(Constant):
@@ -105,7 +105,7 @@ class BetClient(object):
         """Navigate the https://www.bet.co.za betting history page.
         """
         self.driver.find_element_by_link_text("My Betting History").click()
-    
+
     def goto_account_history(self):
         """Navigate the https://www.bet.co.za account history page.
         """

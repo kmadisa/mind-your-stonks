@@ -3,10 +3,12 @@ import random
 import psutil
 
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.firefox.options import Options
 from loguru import logger
 
 TIMEOUT = 60
+
 
 def sleeper(min_range=10, max_range=30):
     time.sleep(random.randint(min_range, max_range))
