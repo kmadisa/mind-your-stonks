@@ -181,8 +181,28 @@ class BetClient(object):
         return money_invested
 
     def export_betting_history_data(self, month=str(BetMonth.ALL)):
+        """
+        Parameters
+        ----------
+        month : str
+            A string representation of the BetMonth instance.
+
+        Returns
+        -------
+        betting_history : dict
+            The key represent the bet ID and the value is the tuple of lists
+            with the bet data.
+            e.g.
+                {
+                    "BET1234567890": (
+                        [[metadata],],
+                        [[columns],],
+                        [[table],]
+                    )
+                }
+        """
         self.filter_betting_history(BetStatus.ALL, month=month)
-        betting_history = []
+        betting_history = {}
         number_of_pages = self._get_number_of_pages_for_table()
         first_page = 1
         last_page = number_of_pages + 1
@@ -214,11 +234,7 @@ class BetClient(object):
                 betting_history_window = window_handles[0]
                 ticket_link.click()
                 time.sleep(TIMEOUT)
-
-                # TODO (kmadisa 06-09-2019) Extract information fromt the ticket.
-                # self._extract_ticket_data()
-                # Find a way to insert the data into the betting_history
-
+                betting_history[ticket.text] = self._extract_ticket_data()
                 self.driver.switch_to.window(betting_history_window)
 
         return betting_history
