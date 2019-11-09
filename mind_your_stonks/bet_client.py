@@ -23,7 +23,7 @@ TIMEOUT = 2.00
 
 class BetHistoryTableColumn(Constant):
     (TICKET, EVENT_DATE, TOURNAMENT, EVENT, SELECTION, BET_TYPE,
-     STAKE, POTENTIAL_WIN, STATUS)  = range(1, 10)
+     STAKE, POTENTIAL_WIN, STATUS) = range(1, 10)
 
 
 class BetStatus(Constant):
@@ -263,6 +263,7 @@ class BetClient(object):
             self.web_setup.logger.debug(f"Processing table number: {number}.")
             headers = table.find_elements_by_xpath("thead/tr[2]/td")
             metadata = []
+            metadata.extend([ticket_date, ticket_time])
             for header in headers:
                 metadata.append(header.text)
 
