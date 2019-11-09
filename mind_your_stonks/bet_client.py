@@ -1,4 +1,5 @@
 import time
+import collections
 from aenum import Constant
 from datetime import datetime
 
@@ -12,6 +13,7 @@ from mind_your_stonks.web_driver import WebDriverSetup
 
 BET_URL = "https://www.bet.co.za"
 TIMEOUT = 2.00
+TABLE_METADATA, TABLE_FIELDS, TICKET_TABLES = 0, 1, 2
 
 # Solution for creating a set of constants found here
 # https://codereview.stackexchange.com/questions/193090/python-constant-class-different-enum-implementation
@@ -22,7 +24,7 @@ TIMEOUT = 2.00
 
 class BetHistoryTableColumn(Constant):
     (TICKET, EVENT_DATE, TOURNAMENT, EVENT, SELECTION, BET_TYPE,
-     STAKE, POTENTIAL_WIN, STATUS)  = range(1, 10)
+     STAKE, POTENTIAL_WIN, STATUS) = range(1, 10)
 
 
 class BetStatus(Constant):
@@ -180,8 +182,28 @@ class BetClient(object):
         return money_invested
 
     def export_betting_history_data(self, month=str(BetMonth.ALL)):
+        """
+        Parameters
+        ----------
+        month : str
+            A string representation of the BetMonth instance.
+
+        Returns
+        -------
+        betting_history : dict
+            The key represent the bet ID and the value is the tuple of lists
+            with the bet data.
+            e.g.
+                {
+                    "BET1234567890": (
+                        [[metadata],],
+                        [[columns],],
+                        [[table],]
+                    )
+                }
+        """
         self.filter_betting_history(BetStatus.ALL, month=month)
-        betting_history = []
+        betting_history = {}
         number_of_pages = self._get_number_of_pages_for_table()
         first_page = 1
         last_page = number_of_pages + 1
@@ -213,7 +235,88 @@ class BetClient(object):
                 betting_history_window = window_handles[0]
                 ticket_link.click()
                 time.sleep(TIMEOUT)
-                # TODO (kmadisa 06-09-2019) Extract information fromt the ticket.
+                betting_history[ticket.text] = self._extract_ticket_data()
                 self.driver.switch_to.window(betting_history_window)
 
         return betting_history
+
+    def _extract_ticket_data(self):
+        """Extracts the data in the betting ticket.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        ticket_data : tuple
+            A tuple of three lists.
+                0: table metadata
+                1: table column names
+                2: table of bet entries
+        """
+        # Get ticket date
+        # <tr>
+        #     <td>Bet Date:</td>
+        #     <td>yyyy-mm-dd hh:mm:ss</td>
+        # <tr>
+        ticket_date_elts = self.driver.find_elements_by_xpath(
+            "/html/body/div[1]/table/tbody/tr[5]/td")
+        ticket_date, ticket_time = ticket_date_elts[-1].text.split(" ")
+        self.web_setup.logger.debug("Successfully extracted ticket date and time.")
+
+        ticket_data = ([], [], [])
+
+        # Get all tables in the ticket.
+        tables = self.driver.find_elements_by_xpath(
+            "/html/body/div[2]/table/tbody/tr/td/table")
+
+        if not isinstance(tables, collections.Iterable):
+            tables = [tables]
+
+        self.web_setup.logger.debug(f"Found {len(tables)} tables in the ticket.")
+        for number, table in enumerate(tables):
+            self.web_setup.logger.debug(f"Processing table number: {number}.")
+            headers = table.find_elements_by_xpath("thead/tr[2]/td")
+            metadata = []
+            metadata.extend([ticket_date, ticket_time])
+            for header in headers:
+                metadata.append(header.text)
+
+            # Get table column names
+            #  <tr>
+            #      <th>Event</th>
+            #      <th>Draw Id</th> (for lucky numbers)
+            #      <th>Event Date</th>
+            #      <th>Selection</th>
+            #      <td>Places</td>   (for accumulator bet type)
+            #      <th>Price</th>
+            #      <th>Bet</th>
+            #      <th>Returned</th>
+            #      <th>Status</th>
+            #      <th>Venue</th>
+            #      <th>Bet Type</th>
+            #  </tr>
+            column_elts = table.find_elements_by_xpath("thead/tr[3]/th")
+            column_names = [column_elt.text for column_elt in column_elts]
+            ticket_data[TABLE_FIELDS].append(column_names)
+
+            # Get bet entries in the table by row.
+            bet_elts = table.find_elements_by_xpath("tbody/tr")
+            bet_table = []
+            for bet_elt in bet_elts:
+                bet_info_elts = bet_elt.find_elements_by_xpath("td")
+                bet_entry = []
+
+                for bet_info_elt in bet_info_elts:
+                    bet_entry.append(bet_info_elt.text)
+
+                bet_table.append(bet_entry)
+
+            ticket_data[TABLE_METADATA].append(metadata)
+            ticket_data[TICKET_TABLES].append(bet_table)
+            self.web_setup.logger.debug(f"Succesfully processed table number: {number}.")
+
+        self.web_setup.logger.debug("COMPLETE: Extracting ticket data.")
+
+        return ticket_data
