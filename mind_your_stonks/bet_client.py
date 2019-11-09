@@ -13,6 +13,7 @@ from mind_your_stonks.web_driver import WebDriverSetup
 
 BET_URL = "https://www.bet.co.za"
 TIMEOUT = 2.00
+TABLE_METADATA, TABLE_FIELDS, TICKET_TABLES = 0, 1, 2
 
 # Solution for creating a set of constants found here
 # https://codereview.stackexchange.com/questions/193090/python-constant-class-different-enum-implementation
@@ -265,7 +266,6 @@ class BetClient(object):
         self.web_setup.logger.debug("Successfully extracted ticket date and time.")
 
         ticket_data = ([], [], [])
-        table_metadata, table_fields, tables_ = 0, 1, 2
 
         # Get all tables in the ticket.
         tables = self.driver.find_elements_by_xpath(
@@ -299,7 +299,7 @@ class BetClient(object):
             #  </tr>
             column_elts = table.find_elements_by_xpath("thead/tr[3]/th")
             column_names = [column_elt.text for column_elt in column_elts]
-            ticket_data[table_fields].append(column_names)
+            ticket_data[TABLE_FIELDS].append(column_names)
 
             # Get bet entries in the table by row.
             bet_elts = table.find_elements_by_xpath("tbody/tr")
@@ -313,8 +313,8 @@ class BetClient(object):
 
                 bet_table.append(bet_entry)
 
-            ticket_data[table_metadata].append(metadata)
-            ticket_data[tables_].append(bet_table)
+            ticket_data[TABLE_METADATA].append(metadata)
+            ticket_data[TICKET_TABLES].append(bet_table)
             self.web_setup.logger.debug(f"Succesfully processed table number: {number}.")
 
         self.web_setup.logger.debug("COMPLETE: Extracting ticket data.")
