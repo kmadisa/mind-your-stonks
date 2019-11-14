@@ -32,3 +32,6 @@ ENV/
 
 # Log files
 *.log
+
+# VSCode
+.vscode/
