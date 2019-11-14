@@ -1,0 +1,37 @@
+# Python droppings and byte-compiled files
+*.py[cod]
+__pycache__/
+*$py.class
+
+# Secrets
+*.json
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+sdist/
+*.egg-info/
+*.egg
+*.ini
+
+# dotenv
+.env
+
+# Virtualenv
+venv/
+ENV/
+
+# Unit test
+.pytest_cache/
+
+# Log files
+*.log
+
+# VSCode
+.vscode/
