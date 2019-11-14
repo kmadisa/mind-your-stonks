@@ -44,15 +44,33 @@ class BetMonth(Constant):
 
 
 class BetClient(object):
-    """
+    """The BETcoza client allows users to navigate around the https://www.bet.co.za
+    site and extract data from it.
+
+    Attributes
+    ----------
+    driver : webdriver.Firefox instance
+        Controls a browser by sending commands to a remote server.
     """
     def __init__(self, username, password, headless=True):
+        """
+        Parameters
+        ----------
+        username : str
+            Registered username for the https://www.bet.co.za site.
+        password : str
+            Registered password for the https://www.bet.co.za site.
+        headless : bool
+            Flag to run the Firefox browser headless or not.
+        """
         self._username = username
         self._password = password
         self.web_setup = WebDriverSetup(headless)
         self.driver = self.web_setup.driver
 
     def sign_in(self):
+        """Log into the https://www.bet.co.za site using your credentials.
+        """
         self.web_setup.open_session(BET_URL)
         self.driver.find_element_by_name("frmUsername").send_keys(self._username)
         self.driver.find_element_by_name("frmPassword").send_keys(self._password)
@@ -63,23 +81,40 @@ class BetClient(object):
         self.web_setup.logger.info(f"Succesfully logged into {BET_URL}.")
 
     def sign_out(self):
+        """Log out of the https://www.bet.co.za site.
+        """
         self.driver.find_element_by_xpath("//*[@id='block-logout']").click()
         self.web_setup.logger.info("Succesfully logged out of {BET_URL}.")
         self.web_setup.close_session()
 
     @property
     def timestamp(self):
+        """Returns the current time displayed on https://www.bet.co.za site.
+
+        Returns
+        -------
+        timestamp : str
+            Current timestamp displayed on the site.
+        """
         timestamp = self.driver.find_element_by_id("time").text.split("Your time: ")
         timestamp = timestamp[-1].strip()
         return timestamp
 
     @property
     def current_balance(self):
+        """Returns the current account balance displayed on https://www.bet.co.za site.
+        Returns
+        -------
+        account_balance : str
+            Current account balance displayed on the site.
+        """
         account_balance = (
             self.driver.find_element_by_id("blocklogout_userBalanceText").text)
         return account_balance
 
     def goto_betting_history(self):
+        """Navigate the https://www.bet.co.za betting history page.
+        """
         self.driver.find_element_by_link_text("My Betting History").click()
         WebDriverWait(self.driver, TIMEOUT).until(
             condition.url_to_be(
@@ -87,6 +122,8 @@ class BetClient(object):
         self.web_setup.logger.info("Switched to the Betting History page.")
 
     def goto_account_history(self):
+        """Navigate the https://www.bet.co.za account history page.
+        """
         self.driver.find_element_by_link_text("My Account History").click()
         WebDriverWait(self.driver, TIMEOUT).until(
             condition.url_to_be(
@@ -95,14 +132,15 @@ class BetClient(object):
 
     def filter_betting_history(self, status, month=BetMonth.LAST_7_DAYS,
                                year=str(datetime.now().year)):
-        """
+        """Filter the https://www.bet.co.za betting history table according to the
+        filter options.
 
         Parameters
         ----------
-        status : str
-            Wager status
-        month : str
-            Calendar months in integer or string value.
+        status : BetStatus instance.
+            Wager status.
+        month : BetMonth instance
+            Date filter value.
         year : str
             Years from 2011 to current.
         """
@@ -132,6 +170,13 @@ class BetClient(object):
             condition.presence_of_element_located((By.CLASS_NAME, "stdTable")))
 
     def _get_number_of_pages_for_table(self):
+        """
+
+        Returns
+        -------
+        num_of_pages : int
+            The maximum number of pages for the table.
+        """
         # Pages can come in different forms
         # '' ==> means just one page
         # '12»' ==> means just two pages in total
@@ -154,6 +199,14 @@ class BetClient(object):
     # TODO (kmadisa 06-09-2019) Find a way to refactor the duplicate code inside
     # the `compute_money_invested` and `export_betting_history_data` methods.
     def compute_money_invested(self):
+        """Calculate the amount of money has been taken from the balance and placed
+        in a bet(s).
+
+        Returns
+        -------
+        money_invested : float
+            The amount of money placed in a bet(s).
+        """
         money_invested = 0.00
         number_of_pages = self._get_number_of_pages_for_table()
         first_page = 1

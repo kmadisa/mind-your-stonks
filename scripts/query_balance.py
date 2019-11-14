@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
-import csv
 import argparse
 from datetime import datetime
-
 from aenum import Constant
 from loguru import logger
-
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 
 from googlesheets.google_sheet_manager import GoogleSheetManager
 
@@ -31,7 +26,8 @@ parser.add_argument(
 parser.add_argument(
     "--update-spreadsheet",
     help="Update spreadsheet with new data. This requires the client_secret.json"
-        " file for authentication. It is downloaded from the Google Developers' Console.",)
+         " file for authentication. It is downloaded from the Google Developers' Console.",)
+
 
 def main():
 
@@ -43,13 +39,13 @@ def main():
     table_entry = {}
     table_entry["Date"] = "=DATE({},{},{})".format(
         *(str(datetime.date(datetime.now())).split("-")))
-    table_entry["Timestamp"]= better.timestamp
-    
+    table_entry["Timestamp"] = better.timestamp
+
     better.goto_betting_history()
     better.filter_betting_history(BetStatus.UNSETTLED)
-    
+
     table_entry["Money_in_bets"] = better.compute_money_invested()
-    table_entry["Balance"]= better.current_balance
+    table_entry["Balance"] = better.current_balance
 
     better.sign_out()
 
@@ -58,6 +54,7 @@ def main():
         gsheet_manager = GoogleSheetManager(credentials_path=opts.update_spreadsheet,
                                             sheet_id="1DWRxtnTIHiRuQ9w1Yq4TiZJqidIZhguiGadYDNgnZsI")
         gsheet_manager.start_session()
+        logger.debug("Started session on the Google sheet.")
 
         previous_row_num = len(gsheet_manager.get_all_rows())
         current_row_num = previous_row_num + 1
@@ -72,8 +69,10 @@ def main():
         # Spreadsheet columns
         # | Date | Timestamp | Money in bets | Balance | Loss/Gain | % Increase |
         gsheet_manager.append_row(list(table_entry.values()))
+        logger.debug("COMPLETE: Writing data to the Google sheet.")
 
         gsheet_manager.close_session()
+
 
 if __name__ == "__main__":
     main()
