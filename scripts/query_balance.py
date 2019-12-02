@@ -44,8 +44,8 @@ def main():
     better.goto_betting_history()
     better.filter_betting_history(BetStatus.UNSETTLED)
 
-    table_entry["Money_in_bets"] = better.compute_money_invested()
     table_entry["Balance"] = better.current_balance
+    table_entry["Money_in_bets"] = better.compute_money_invested()
 
     better.sign_out()
 
@@ -67,7 +67,7 @@ def main():
 
         # Write to the spreadsheet
         # Spreadsheet columns
-        # | Date | Timestamp | Money in bets | Balance | Loss/Gain | % Increase |
+        # | Date | Timestamp | Balance | Money in bets | Actual Loss/Gain | % Decrease/Increase |
         gsheet_manager.append_row(list(table_entry.values()))
         logger.debug("COMPLETE: Writing data to the Google sheet.")
 
