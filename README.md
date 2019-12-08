@@ -34,10 +34,7 @@ Basically there is utility script that run and log into the client's [BET.co.za]
 3. Install Selenium:
     *   `pip install selenium`
 
-4. Install the python-gspread-sheets package:
-    *   `pip install -r requirements.txt`
-
-5. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
+4. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
 
 ![Screenshot from 2019-12-02 21-50-12](https://user-images.githubusercontent.com/16665803/69991535-8cadf880-1550-11ea-801a-817db3adbbc5.png)
 Figure 1. A snapshot of the spreadsheet and the respective columns.
