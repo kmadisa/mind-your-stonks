@@ -19,7 +19,6 @@ before_install:
   - pip install aenum
   - pip install loguru
   - pip install psutil
-  - pip install -r requirements.txt
 
 install:
   - pip install .

@@ -34,13 +34,10 @@ Basically there is utility script that run and log into the client's [BET.co.za]
 3. Install Selenium:
     *   `pip install selenium`
 
-4. Install the python-gspread-sheets package:
-    *   `pip install -r requirements.txt`
+4. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
 
-5. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
-
-![Screenshot from 2019-10-26 15-57-25](https://user-images.githubusercontent.com/16665803/67620667-959d0300-f809-11e9-9048-eed3f950521e.png)
-Figure 1. A snapshot of the spreadsheet columns.
+![Screenshot from 2019-12-02 21-50-12](https://user-images.githubusercontent.com/16665803/69991535-8cadf880-1550-11ea-801a-817db3adbbc5.png)
+Figure 1. A snapshot of the spreadsheet and the respective columns.
 
 #### Table columns
    * *Date*: date reading was made (yyyy-mm-dd).
@@ -50,6 +47,11 @@ Figure 1. A snapshot of the spreadsheet columns.
    * *Actual Loss/Gain*: difference between the previous known balance and the current one
                          (+ money in bets).
    * *% Increase*: calculated from the previous known balance and the current one (+ money in bets).
+
+##### Other fields
+   * *Opening Balance*: te amount of money in the account at the first of the month.
+   * *Closing Balance*: te amount of money in the account at the end of the current month.
+   * *Graph*: a plot of the account's balance.
 
 ## Usage
 

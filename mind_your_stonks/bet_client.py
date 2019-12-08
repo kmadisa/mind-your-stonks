@@ -157,7 +157,6 @@ class BetClient(object):
         # '' ==> means just one page
         # '12»' ==> means just two pages in total
         # '1234567»[12]' ==> means 12 pages in total
-        # 
         pagination = self.driver.find_element_by_class_name("pagination")
         pagination_text = pagination.text
         num_of_pages = 0
@@ -170,7 +169,7 @@ class BetClient(object):
         elif pagination_text.endswith("]"):
             # '1234567»[12]' -> 12
             num_of_pages = int(pagination_text.split("[")[-1].split("]")[0])
-        
+
         return num_of_pages
 
     def compute_money_invested(self):
@@ -193,12 +192,12 @@ class BetClient(object):
                 pagination = self.driver.find_element_by_class_name("pagination")
                 page_ = pagination.find_element_by_link_text('{}'.format(page))
                 page_.click()
-            
+
             # Get all the rows on column number 7 (Stake)
             stakes = table.find_elements_by_xpath(
                 "//tr/td["+str(BetHistoryTableColumn.STAKE)+"]")
-        
+
             for stake in stakes:
                 money_invested += float(stake.text)
-        
+
         return money_invested
