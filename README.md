@@ -77,7 +77,7 @@ optional arguments:
 
 Typical usage:
 ```bash
-query_balance.py $USERNAME $PASSWORD --update-spreadsheet ./client_secret.jsons
+query_balance.py $USERNAME $PASSWORD --update-spreadsheet ./client_secret.json
 ```
 
 ## Travis CI automated daily balance reader
