@@ -87,4 +87,4 @@ See: https://docs.travis-ci.com/user/deployment/google-app-engine/
 
 ## Feedback
 
-Feel free to fork it or send me PR to improve it.
+Feel free to fork it or send me a PR to improve it.
