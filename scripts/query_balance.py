@@ -82,7 +82,7 @@ def main():
                  'https://www.googleapis.com/auth/drive']
         # Use creds to create a client to interact with the Google Drive API
         creds = ServiceAccountCredentials.from_json_keyfile_name(
-            opts.client_secrets, scope)
+            opts.update_spreadsheet, scope)
         client = gspread.authorize(creds)
         # Find a workbook by name and open the sheet of interest.
         # Make sure you use the right name here.
