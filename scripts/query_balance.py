@@ -125,7 +125,7 @@ def main():
         # Spreadsheet columns
         # | Date | Timestamp | Balance | Money in bets | Actual Loss/Gain | % Decrease/Increase |
         logger.debug("COMMENCING: Writing data to the Google sheet.")
-        sheet.append_row(list(table_entry.values()))
+        sheet.append_row(list(table_entry.values()), value_input_option='USER_ENTERED')
         logger.debug("COMPLETE: Writing data to the Google sheet.")
 
 
