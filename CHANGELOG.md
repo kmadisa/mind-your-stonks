@@ -9,18 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Removed
+
+### Changed
+
+## [1.0.0] 2019-12-10
+
+### Added
+
 - Created a `BetClient` class encapsulating all the behaviour in the deleted `bet_stats.py` and `spreadsheet.py` modules [PR#15](https://github.com/kmadisa/mind-your-stonks/pull/15)..
 - A utility classs that wraps the Selenium webdriver object [PR#15](https://github.com/kmadisa/mind-your-stonks/pull/15)..
 
 ### Removed
 
 - Deleted the `bet_stats.py` and `spreadsheet.py` scripts [PR#15](https://github.com/kmadisa/mind-your-stonks/pull/15).
+- Usage of the [python-gspread-sheets](https://github.com/CROSP/python-gspread-sheets) package.
 
 ### Changed
 
+- Support for the new spreadsheet with nicely formatted tables for easy use.
 - Moved around the spreadsheet columns:
-    | Date | Timestamp | Money in bets | Balance | Loss/Gain | % Increase |
-    [PR#15](https://github.com/kmadisa/mind-your-stonks/pull/15).
+    | Date | Timestamp | Balance | Money in bets | Loss/Gain | % Decrease/Increase |
+    [PR#27](https://github.com/kmadisa/mind-your-stonks/pull/27).
 
 ## [0.0.1] - 2019-10-26
 
