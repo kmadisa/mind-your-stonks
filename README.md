@@ -36,7 +36,7 @@ Basically there is utility script that run and log into the client's [BET.co.za]
 
 4. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
 
-![Screenshot from 2019-12-02 21-50-12](https://user-images.githubusercontent.com/16665803/69991535-8cadf880-1550-11ea-801a-817db3adbbc5.png)
+![Screenshot from 2019-12-10 15-32-48](https://user-images.githubusercontent.com/16665803/70533841-8debb080-1b62-11ea-82a6-a4aa9e188ef3.png)
 Figure 1. A snapshot of the spreadsheet and the respective columns.
 
 #### Table columns
