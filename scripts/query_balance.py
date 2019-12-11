@@ -86,6 +86,7 @@ def main():
         client = gspread.authorize(creds)
         # Find a workbook by name and open the sheet of interest.
         # Make sure you use the right name here.
+        logger.debug("Opening the Google spreadsheet...")
         spreadsheet = client.open("BET account balance")
         logger.debug("Started session on the Google sheet.")
         sheet = spreadsheet.worksheet("{} {}".format(month, year))
@@ -95,18 +96,28 @@ def main():
         if day == 1:
             sheet.update_cell(
                 OPENING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+            logger.debug("First day of the {} month!!! Setting the opening balance."
+                         .format(month))
         elif day == 28 and month == leap_year_month and not is_leap_year(year):
             sheet.update_cell(
                 CLOSING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+            logger.debug("Last day of the {} month!!! Setting the closing balance."
+                         .format(month))
         elif day == 29 and month == leap_year_month:
             sheet.update_cell(
                 CLOSING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+            logger.debug("Last day of the {} month!!! Setting the closing balance."
+                         .format(month))
         elif day == 30 and month in months_with_30_days:
             sheet.update_cell(
                 CLOSING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+            logger.debug("Last day of the {} month!!! Setting the closing balance."
+                         .format(month))
         elif day == 31:
             sheet.update_cell(
                 CLOSING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+            logger.debug("Last day of the {} month!!! Setting the closing balance."
+                         .format(month))
 
         previous_row_num = len(sheet.get_all_values())
         current_row_num = previous_row_num + 1
