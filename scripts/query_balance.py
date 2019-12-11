@@ -110,17 +110,22 @@ def main():
 
         previous_row_num = len(sheet.get_all_values())
         current_row_num = previous_row_num + 1
-        table_entry["Gain_loss"] = (
-            "=MINUS(SUM({0}{2},{1}{2}), SUM({0}{3},{1}{3}))".format(
-                SpreadsheetColumn.BALANCE, SpreadsheetColumn.MONEY_IN_BETS,
-                current_row_num, previous_row_num)
-        )
 
-        table_entry["Percentage_increase"] = (
-            "={2}{3}/SUM({0}{4}, {1}{4})".format(
-                SpreadsheetColumn.BALANCE, SpreadsheetColumn.MONEY_IN_BETS,
-                SpreadsheetColumn.GAIN_LOSS, current_row_num, previous_row_num)
-        )
+        if day == 1:
+            table_entry["Gain_loss"] = 0.00
+            table_entry["Percentage_increase"] = 0.00
+        else:
+            table_entry["Gain_loss"] = (
+                "=MINUS(SUM({0}{2},{1}{2}), SUM({0}{3},{1}{3}))".format(
+                    SpreadsheetColumn.BALANCE, SpreadsheetColumn.MONEY_IN_BETS,
+                    current_row_num, previous_row_num)
+            )
+
+            table_entry["Percentage_increase"] = (
+                "={2}{3}/SUM({0}{4}, {1}{4})".format(
+                    SpreadsheetColumn.BALANCE, SpreadsheetColumn.MONEY_IN_BETS,
+                    SpreadsheetColumn.GAIN_LOSS, current_row_num, previous_row_num)
+            )
         # Write to the spreadsheet
         # Spreadsheet columns
         # | Date | Timestamp | Balance | Money in bets | Actual Loss/Gain | % Decrease/Increase |
