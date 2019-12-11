@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+## [1.0.1]
+
+### Changed
+
+- Setting the ```| Loss/Gain | % Decrease/Increase |``` values to zero on the first day of the month [PR#30](https://github.com/kmadisa/mind-your-stonks/pull/30).
+
 ## [1.0.0] 2019-12-10
 
 ### Added
