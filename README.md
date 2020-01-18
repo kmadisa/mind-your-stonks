@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/{kmadisa}/{mind-your-stonks}/workflows/{update_stonks_sheet.yml}/badge.svg)](https://github.com/{kmadisa}/{mind-your-stonks}/actions)
+[![Actions Status](https://github.com/kmadisa/mind-your-stonks/workflows/Mind%20Your%20Stonks/badge.svg)](https://github.com/kmadisa/mind-your-stonks/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kmadisa/mind-your-stonks.svg)
 ![GitHub issues](https://img.shields.io/github/issues/kmadisa/mind-your-stonks.svg)
