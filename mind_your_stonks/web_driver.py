@@ -10,7 +10,7 @@ from loguru import logger
 TIMEOUT = 60
 
 
-def disable_images_firefox_profile(:
+def disable_images_firefox_profile():
     """Summary
     Returns:
         Object: FirefoxProfile
