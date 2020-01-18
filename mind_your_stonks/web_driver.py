@@ -10,8 +10,21 @@ from loguru import logger
 TIMEOUT = 60
 
 
-def sleeper(min_range=10, max_range=30):
-    time.sleep(random.randint(min_range, max_range))
+def disable_images_firefox_profile(:
+    """Summary
+    Returns:
+        Object: FirefoxProfile
+    """
+    # Get the Firefox profile object
+    firefoxProfile = webdriver.FirefoxProfile()
+    # Disable images
+    firefoxProfile.set_preference("permissions.default.image", 2)
+    # Disable Flash
+    firefoxProfile.set_preference(
+        "dom.ipc.plugins.enabled.libflashplayer.so", "false"
+    )
+    # Set the modified profile while creating the browser object
+    return firefoxProfile
 
 
 class WebDriverSetup(object):
@@ -20,7 +33,7 @@ class WebDriverSetup(object):
         self._timeout = TIMEOUT
         self._options = Options()
         self._options.headless = headless
-        self._profile = self._disable_images_firefox_profile()
+        self._profile = disable_images_firefox_profile()
         self.logger = logger
 
         self.driver = webdriver.Firefox(
@@ -41,28 +54,12 @@ class WebDriverSetup(object):
             self.logger.exception("Timed-out while loading page.")
             self.close_session()
 
-    def _disable_images_firefox_profile(self):
-        """Summary
-        Returns:
-            Object: FirefoxProfile
-        """
-        # get the Firefox profile object
-        firefoxProfile = webdriver.FirefoxProfile()
-        # Disable images
-        firefoxProfile.set_preference("permissions.default.image", 2)
-        # Disable Flash
-        firefoxProfile.set_preference(
-            "dom.ipc.plugins.enabled.libflashplayer.so", "false"
-        )
-        # Set the modified profile while creating the browser object
-        return firefoxProfile
-
     def close_session(self):
         """Close browser and cleanup"""
         self.logger.info("Closing the browser...")
         self.driver.close()
         self.driver.quit()
-        sleeper()
+        time.sleep(10)
         PROCNAME = "geckodriver"
         self.logger.info("Cleaning up by killing {} process", PROCNAME)
         _ = [
