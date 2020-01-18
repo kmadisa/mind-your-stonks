@@ -2,7 +2,7 @@ name: Mind Your Stonks
 
 on:
   schedule:
-    
+    - cron: "1 2 * * *"
 
 jobs:
   monitor:
@@ -10,32 +10,30 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python 3.7
+    - name: Set up Python 3.6
       uses: actions/setup-python@v1
       with:
-        python-version: 3.7
+        python-version: 3.6
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install selenium
         wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
         mkdir geckodriver
         tar -xzf geckodriver-v0.24.0-linux64.tar.gz -C geckodriver
-        export PATH=$PATH:$PWD/geckodriver
+        chmod +x geckodriver/geckodriver
+        sudo cp geckodriver/geckodriver /usr/local/bin
         geckodriver --version || exit 1
+        pip install selenium
         pip install gspread
         pip install --upgrade oauth2client
         pip install aenum
         pip install loguru
         pip install psutil
-    - name: Install repo
+    - name: Install repository
       run: |
         pip install .
-    - name: Read balance
+    - name: Update balance sheet
       run: |
-        query_balance.py $USERNAME $PASSWORD
-      if: github.ref != 'refs/heads/master'
-    - name: Publish sheets
-      run: |
-        query_balance.py $USERNAME $PASSWORD --update-spreadsheet ./client_secret.json
+        openssl enc -aes-256-cbc -d -pass pass:${{ secrets.sheet_password }} -in client_secrets.enc -out client_secrets.json
+        query_balance.py ${{ secrets.USERNAME }} ${{ secrets.PASSWORD }} --update-spreadsheet ./client_secrets.json
+        rm ./client_secrets.json
       if: github.ref == 'refs/heads/master'
