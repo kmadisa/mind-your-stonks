@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/kmadisa/mind-your-stonks.svg?branch=master)](https://travis-ci.org/kmadisa/mind-your-stonks)
+[![Actions Status](https://github.com/kmadisa/mind-your-stonks/workflows/Mind%20Your%20Stonks/badge.svg)](https://github.com/kmadisa/mind-your-stonks/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kmadisa/mind-your-stonks.svg)
 ![GitHub issues](https://img.shields.io/github/issues/kmadisa/mind-your-stonks.svg)
@@ -25,14 +25,14 @@ Basically there is utility script that run and log into the client's [BET.co.za]
 1. Obtain Google API for authentication:
     *   Follow the instructions [here](https://gspread.readthedocs.io/en/latest/oauth2.html#oauth-credentials)
 
-2. Install ensure that `geckodrive` for Firefox is installed.
+2. Ensure that `geckodriver` for Firefox is installed.
     *   Download [geckodriver](https://github.com/mozilla/geckodriver)
         *   ```wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz```
         *   Extract: ```tar -xvzf geckodriver-v0.24.0-linux64.tar.gz```
     *   `sudo cp geckodriver /usr/local/bin`
 
-3. Install Selenium:
-    *   `pip install selenium`
+3. Install the library:
+    *   `python setup.py install`
 
 4. Upload a copy of the [spreadsheet](https://docs.google.com/spreadsheets/d/1k--fJt5qC191RMHH3D2MbhRhaIJb__WTEBjOL1rcksc/edit?usp=sharing) to your own GDrive or [GSpeadsheet](https://docs.google.com/spreadsheets).
 
@@ -77,12 +77,12 @@ optional arguments:
 
 Typical usage:
 ```bash
-query_balance.py $USERNAME $PASSWORD --update-spreadsheet ./client_secret.json
+query_balance.py $USERNAME $PASSWORD --update-spreadsheet ./client_secrets.json
 ```
 
-## Travis CI automated daily balance reader
-Travis CI can automatically run your Google App Engine based application, by encrypting your `clients_secrets.json` file and pushing it to `GitHub`.
-See: https://docs.travis-ci.com/user/deployment/google-app-engine/
+## Github Actions automated daily balance reader
+Github Actions can automatically run your Google App Engine based application, by encrypting your `clients_secrets.json` file and pushing it to `GitHub`.
+See example: https://github.com/kmadisa/mind-your-stonks/blob/master/.github/workflows/update_stonks_sheet.yml
 
 
 ## Feedback
