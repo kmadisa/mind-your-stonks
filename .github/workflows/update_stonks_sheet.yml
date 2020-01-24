@@ -1,0 +1,39 @@
+name: Mind Your Stonks
+
+on:
+  schedule:
+    - cron: "1 2 * * *"
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.6
+    - name: Install the dependencies
+      run: |
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+        mkdir geckodriver
+        tar -xzf geckodriver-v0.24.0-linux64.tar.gz -C geckodriver
+        chmod +x geckodriver/geckodriver
+        sudo cp geckodriver/geckodriver /usr/local/bin
+        geckodriver --version || exit 1
+        pip install selenium
+        pip install gspread
+        pip install --upgrade oauth2client
+        pip install aenum
+        pip install loguru
+        pip install psutil
+    - name: Install the repository
+      run: |
+        pip install .
+    - name: Update balance the sheet
+      run: |
+        openssl enc -aes-256-cbc -d -pass pass:${{ secrets.sheet_password }} -in client_secrets.enc -out client_secrets.json
+        query_balance.py ${{ secrets.USERNAME }} ${{ secrets.PASSWORD }} --update-spreadsheet ./client_secrets.json
+        rm ./client_secrets.json
+      if: github.ref == 'refs/heads/master'
