@@ -10,9 +10,14 @@ from oauth2client.service_account import ServiceAccountCredentials
 from mind_your_stonks.bet_client import BetClient, BetStatus
 
 
-class SpreadsheetColumn(Constant):
+class SpreadsheetColumnLetter(Constant):
     (DATE, TIMESTAMP, BALANCE, MONEY_IN_BETS,
      GAIN_LOSS, PERCENTAGE_INCREASE) = map(chr, range(65, 71))
+
+
+class SpreadsheetColumnNumber(Constant):
+    (DATE, TIMESTAMP, BALANCE, MONEY_IN_BETS,
+     GAIN_LOSS, PERCENTAGE_INCREASE) = range(1, 7)
 
 
 OPENING_BALANCE_ROW = 4
@@ -95,27 +100,32 @@ def main():
         current_account_balance = table_entry["Balance"]
         if day == 1:
             sheet.update_cell(
-                OPENING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+                OPENING_BALANCE_ROW, SpreadsheetColumnNumber.BALANCE,
+                current_account_balance)
             logger.debug("First day of the {} month!!! Setting the opening balance."
                          .format(month))
         elif day == 28 and month == leap_year_month and not is_leap_year(year):
             sheet.update_cell(
-                CLOSING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+                CLOSING_BALANCE_ROW, SpreadsheetColumnNumber.BALANCE,
+                current_account_balance)
             logger.debug("Last day of the {} month!!! Setting the closing balance."
                          .format(month))
         elif day == 29 and month == leap_year_month:
             sheet.update_cell(
-                CLOSING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+                CLOSING_BALANCE_ROW, SpreadsheetColumnNumber.BALANCE,
+                current_account_balance)
             logger.debug("Last day of the {} month!!! Setting the closing balance."
                          .format(month))
         elif day == 30 and month in months_with_30_days:
             sheet.update_cell(
-                CLOSING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+                CLOSING_BALANCE_ROW, SpreadsheetColumnNumber.BALANCE,
+                current_account_balance)
             logger.debug("Last day of the {} month!!! Setting the closing balance."
                          .format(month))
         elif day == 31:
             sheet.update_cell(
-                CLOSING_BALANCE_ROW, SpreadsheetColumn.BALANCE, current_account_balance)
+                CLOSING_BALANCE_ROW, SpreadsheetColumnNumber.BALANCE,
+                current_account_balance)
             logger.debug("Last day of the {} month!!! Setting the closing balance."
                          .format(month))
 
@@ -128,14 +138,19 @@ def main():
         else:
             table_entry["Gain_loss"] = (
                 "=MINUS(SUM({0}{2},{1}{2}), SUM({0}{3},{1}{3}))".format(
-                    SpreadsheetColumn.BALANCE, SpreadsheetColumn.MONEY_IN_BETS,
-                    current_row_num, previous_row_num)
+                    SpreadsheetColumnLetter.BALANCE,
+                    SpreadsheetColumnLetter.MONEY_IN_BETS,
+                    current_row_num,
+                    previous_row_num)
             )
 
             table_entry["Percentage_increase"] = (
                 "={2}{3}/SUM({0}{4}, {1}{4})".format(
-                    SpreadsheetColumn.BALANCE, SpreadsheetColumn.MONEY_IN_BETS,
-                    SpreadsheetColumn.GAIN_LOSS, current_row_num, previous_row_num)
+                    SpreadsheetColumnLetter.BALANCE,
+                    SpreadsheetColumnLetter.MONEY_IN_BETS,
+                    SpreadsheetColumnLetter.GAIN_LOSS,
+                    current_row_num,
+                    previous_row_num)
             )
         # Write to the spreadsheet
         # Spreadsheet columns
