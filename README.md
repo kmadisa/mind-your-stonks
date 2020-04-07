@@ -6,8 +6,7 @@
 
 # Mind your *stonks*
 
-
-![Screen_Shot_2019-06-05_at_1 26 32_PM](https://user-images.githubusercontent.com/16665803/61865197-15e25e00-aed3-11e9-8541-4fff382916b7.jpg)
+![35a1ly](https://user-images.githubusercontent.com/16665803/78668014-4390fb00-78da-11ea-8a81-4d3de52417f1.jpg)
 
 ## The Story
 [BET.co.za](https://bet.co.za) does not have an easier way to track the changes in the user's account balance. All that it displays is the current account balance. In order to get an idea of **how much you had vs how much you have** in your account, you have to sift through lots and lots of pages on the transaction history, not to mention the brutal experience the user will have to go through to compute the **account's balance at a particular moment in time** from all that information.
