@@ -1,8 +1,9 @@
 name: Mind Your Stonks
 
-on:
-  schedule:
-    - cron: "1 2 * * *"
+on: [push, pull_request]
+#on:
+#  schedule:
+#    - cron: "1 2 * * *"
 
 jobs:
   monitor:
